@@ -212,7 +212,7 @@
                                 <li value="/chantierOperationReels">
                                     <a href="/chantierOperationReels" class="waves-effect waves-dark">
                                         <span class="pcoded-micon"><i ></i><b>CQ</b></span>
-                                        <span class="pcoded-mtext">Chantier-Opération Exécuté</span>
+                                        <span class="pcoded-mtext">Exécution des Opérations</span>
                                         <span class="pcoded-mcaret"></span>
                                     </a>
                                 </li>
