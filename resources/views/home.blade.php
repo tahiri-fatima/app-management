@@ -41,10 +41,10 @@
 
   <!-- ======= Header ======= -->
   <header id="header" class="header-transparent">
-    <div class="container">
+    <div class="container" style="margin-top: 0px">
 
-      <div id="logo" class="pull-left">
-        <a href="/home"><img src="assets/images/logo.png" alt="" Style="width: 100px; height:50px;"></a>
+      <div id="logo" class="pull-left" >
+        <a href="/home"><img src="assets/images/logo.png" alt="" Style="width: 100px; height:50px; "></a>
         <!-- Uncomment below if you prefer to use a text logo -->
         <!--<h1><a href="#hero">Regna</a></h1>-->
       </div>
@@ -131,7 +131,7 @@
           <a href="/chantierMateriels" class="btn btn-primary">Chantier-Matériels</a>
           <a href="/chantierNatureFrais" class="btn btn-primary">Chantier-Nature du frais</a>
           <a href="/chantierOperations" class="btn btn-primary">Chantier-Opérations</a>
-          <a href="/chantierOperationReels" class="btn btn-primary">Chantier-Opérations Exécuté</a>
+          <a href="/chantierOperationReels" class="btn btn-primary">Exécuton des Opérations </a>
           <a href="/chantierPersonnels" class="btn btn-primary">Chantier-Personnels</a>
           <a href="/chantierQualifications" class="btn btn-primary">Chantier-Qualifications</a>
           <a href="/commandeMateriaus" class="btn btn-primary">Commande-matériaux</a>
@@ -188,9 +188,9 @@
 
             <div class="menu-has-children" >
               <ul class="dropdown-menu dropdown-menu-right">
-                <li  ><a class="dropdown-item btn btn-primary"  href=" {{ route('chantierMateriels.ListeChantiersMat') }}"> <div> Difference Durée </div> <div> de service Matériel </div></a></li>
-                <li><a class="dropdown-item btn btn-primary" href="{{ route('chantierPersonnels.ListeChantiers') }}"><div>Difference Durée </div> <div> d'afféctation des personnels </div></a></li>
-                <li><a class="dropdown-item btn btn-primary" href="{{ route('chantierOperations.ListeChantiersOper') }} "><div>Quantité de réalisation </div> <div> des opérations </div></a></li>
+                <li  ><a class="dropdown-item btn btn-primary" style="height: 73px;" href=" {{ route('chantierMateriels.ListeChantiersMat') }}"> <div> Difference Durée </div> <div> de service Matériel </div></a></li>
+                <li><a class="dropdown-item btn btn-primary" style="height: 73px;" href="{{ route('chantierPersonnels.ListeChantiers') }}"><div>Difference Durée </div> <div> d'afféctation des personnels </div></a></li>
+                <li><a class="dropdown-item btn btn-primary" style="height: 73px;" href="{{ route('chantierOperations.ListeChantiersOper') }} "><div>Quantité de réalisation </div> <div> des opérations </div></a></li>
               </ul>
             </div>
           </div>
@@ -212,7 +212,7 @@
 
           <div class="row justify-content-around" id="tableau-menu">
             <a href="{{ route('chantiers.BilanChantier') }}" class="btn btn-primary">Graphes du Bilan chantier</a>
-            <a  href=" {{ route('chantiers.DetailPrixSalairesChantier') }}" class="btn btn-primary">Détail des prix élémentaires des salaires</a>
+            <a  href=" {{ route('chantiers.DetailPrixSalairesChantier') }}" style="width: 450px;" class="btn btn-primary">Détail des prix élémentaires des salaires</a>
 
           </div>
 

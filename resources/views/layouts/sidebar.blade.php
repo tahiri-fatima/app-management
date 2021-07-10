@@ -84,7 +84,7 @@
                             </div>
                         </div>
                         
-                        <a href="index.html">
+                        <a href="{{route('home')}}">
                             <img class="img-fluid m-l-50" src="{{url('assets/images/logo.png')}}" alt="Theme-Logo" style="width: 100px; height: 57px;" />
                         </a>
                         <a class="mobile-options waves-effect waves-light">

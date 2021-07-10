@@ -14,7 +14,7 @@
 
 #gestion-menu a{
   height: 50px;
-  width: 250px;
+  width: 300px;
   margin: 20px;
   float: left;
   box-shadow: 0 0 1px #ccc;
@@ -28,7 +28,9 @@ text-align: center;
 
 .menu-has-children {
   border-radius: 40px;
+  
 }
+
 
 
 
@@ -39,7 +41,6 @@ text-align: center;
 
 #edition-menu a{
   height: 50px;
-  width: 300px;
   margin: 20px;
   float: left;
 background-color: #2dc997;
@@ -52,7 +53,6 @@ text-align: center;
 
 #tableau-menu a{
   height: 50px;
-  width: 350px;
   margin: 20px;
   float: left;
 background-color: #f19640;
@@ -81,9 +81,18 @@ color: black;
 }
 
 .btn-primary{
+  font-family: "Poppins", sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 1px;
+  display: inline-block;
+ width: 400px;
+ padding-top: 13px;
+  margin: 10px;
+
 	color: #fff;
-  font-weight: bolder;
-  text-align: center;
+  
 	cursor: pointer;
 	-webkit-transition: all ease-in 0.3s;
 	transition: all ease-in 0.3s;
