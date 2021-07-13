@@ -129,7 +129,7 @@ class AvenantController extends Controller
 
         Avenant::where('id', '=',$avenant->id)->update($request->except(['_token','_method']));
 
-         return redirect()->route('avenants.show', [$avenant])
+         return redirect()->route('avenants.gestionForm')
          ->with('success','Modification avec succès');
     }
 
@@ -139,37 +139,72 @@ class AvenantController extends Controller
      * @param  \App\Models\Avenant  $avenant
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Avenant $avenant)
+    public function destroyAvenant(Avenant $avenant)
     {
         try {
+          //  dd($avenant->id);
+
             $avenant->delete();
-            return redirect()->route('avenants.index')
-                        ->with('success','avenant supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('avenants.gestionForm')
+                        ->with('success','Avenant supprimé avec succes.');
         
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('avenants.index')
+            return redirect()->route('avenants.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          } 
+          }    
+        
     }
 
-    public function search(){
-        $search_c = $_GET['codeavenant'];
 
-        if ($search_c == null){
-            $search_c = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('avenants.create');
         }
-        
-        $avenants = Avenant::query()
-        ->where('code_avenant', 'like', "%".$search_c."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
 
-        if ($avenants->isEmpty()) {
-            return redirect()->route('avenants.index')
-                        ->with('warning',"N'éxiste aucune avenant avec les informations de la recherche");
-        }
+        if (isset($_GET['modifier'])) {
+            $avenants = avenant::all();
+            // dd ($avenants);
+            return view('avenants.gestion', compact('avenants'));
+            }
+            else{
+                $avenants = avenant::all();
+                return view('avenants.gestion', compact('avenants'));
+            }
+
         
-        return view('avenants.search', compact('avenants'));
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['avenant_id'])) {
+            $id = $_GET['avenant_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $avenant = Avenant::find($id);
+             // dd($avenant);
+                return redirect()->route('avenants.destroyAvenant', $avenant);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('avenants.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('avenants.show',$id);
+                    }
+          } else {
+            $avenants = avenant::all();
+            // dd ($avenants);
+            return view('avenants.gestion', compact('avenants'))
+                    ->with('error','Pouvez vous choisir un avenant!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 }

@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container" style="margin-left:80%" > 
-            <a class="btn btn-primary" href="{{ route('frais.show',$frai->id) }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+            <a class="btn btn-primary" href="{{ route('frais.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
 
 
@@ -126,78 +126,4 @@
 
     <!-- end formulaire  -->
 
-    <!-- formulaire 
-    <div class="card">
-
-<div class="card-header"><strong> Modifier le frais</strong> </div>
-
-    <div class="card-body">
-        
-        <div class="col-sm-8">
-
-<form action="{{ route('frais.update',$frai->id) }}" method="POST">
-    @csrf
-   @method('PUT')
-
-   <div class="row justify-content-around" >
-        <div class="col-6">
-            <div class="form-group">
-            <label > <strong>Code : <span class="text-danger">*</span></strong></label>
-                <input type="text" name="codefrais" class="form-control" value="{{ $frai->codefrais }}"  placeholder="Code">
-            </div>
-        </div>
-
-        <div class="col-6">
-            <div class="form-group">
-            <label ><strong>Nature : <span class="text-danger">*</span></strong></label>
-                <input type="text" class="form-control" name="nature" value="{{ $frai->nature }}"  placeholder="Nature">
-            </div>
-        </div>
-        </div>
-
-        <div class="row justify-content-around">
-       
-        <div class="col-6">
-            <div class="form-group">
-            <label > <strong>Date de frais : <span class="text-danger">*</span></strong></label>
-                <input type="date" class="form-control" name="datefrais" value="{{ $frai->datefrais }}" placeholder="Date frais">
-            </div>
-        </div>
-
-        <div class="col-6">
-            <div class="form-group">
-            <label > <strong>Montant de frais : <span class="text-danger">*</span></strong></label>
-                <input type="decimal" class="form-control" name="montantfrais" value="{{ $frai->montantfrais }}" placeholder="Montant frais">
-            </div>
-        </div>
-
-        </div>
-
-        <div class="row ">
-            <div class="col-6">
-                <div class="form-group">
-                    <label ><strong>Chantier : <span class="text-danger">*</span></strong></label>
-                    <div class="select">
-                    <select class="form-control" name="chantier_id" >
-                        <option value="{{ $chantier->id }}">{{ $chantier->intitulechantier }}</option>
-                        @foreach($chantiers as $chantier)
-                            <option value="{{ $chantier->id }}">{{ $chantier->intitulechantier }}</option>
-                        @endforeach
-                    </select>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-<div class=" text-right">
-        <button type="submit" class="btn btn-primary"> <i class="fa fa-fw fa-edit"></i> Editer</button>
-</div>
-</div>
-
-</form>
-</div>
-    </div>
-</div>
-!-->
 @endsection

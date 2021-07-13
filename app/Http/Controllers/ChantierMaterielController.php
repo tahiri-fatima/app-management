@@ -251,7 +251,7 @@ $total = 0;
                 } 
             }   
         }
-      return redirect()->route('chantierMateriels.showMateriels', [$chantier])
+      return redirect()->route('chantierMateriels.gestionForm')
       ->with('success','Modification avec succès');
     }
 
@@ -268,8 +268,63 @@ $total = 0;
             $chantierMateriel->delete();
         }
         
-        return redirect()->route('chantierMateriels.index')
+        return redirect()->route('chantierMateriels.gestionForm')
                         ->with('success','Les matériels du chantier sont supprimé avec succes.');
+    }
+
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+           
+            return redirect()->route('chantierMateriels.create');
+
+        }
+
+        if (isset($_GET['modifier'])) {
+
+            $chantiers = Chantier::all();
+            // dd ($chantiers);
+            return view('chantierMateriels.gestion', compact('chantiers'));
+            }
+            else{
+                $chantiers = Chantier::all();
+
+                return view('chantierMateriels.gestion', compact('chantiers'));
+
+            }
+
+        
+    }
+    public function gotoIndex(){
+        if (isset($_GET['chantier_id'])) {
+            $id = $_GET['chantier_id'];
+            $chantier = Chantier::find($id);
+    
+            if (isset($_GET['supprimer'])) {
+               
+                return redirect()->route('chantierMateriels.destroyChantierMateriels', $id);
+    
+            }
+    
+            if (isset($_GET['modifier2'])) {
+    
+               
+                return redirect()->route('chantierMateriels.editMateriels', $chantier->id);
+    
+                }
+    
+                if (isset($_GET['consulter'])) {
+    
+                    return redirect()->route('chantierMateriels.showMateriels',$chantier->id);
+        
+                    }
+          } else {
+              $chantiers = Chantier::all();
+            return view('chantierMateriels.gestion', compact('chantiers'))
+                    ->with('error','Pouvez vous choisir une chantier!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
     public function search(){

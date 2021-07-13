@@ -211,7 +211,7 @@ class ChantierNatureFraisController extends Controller
             } 
         } 
         
-        return redirect()->route('chantierNatureFrais.showNatureFrais', [$chantier])
+        return redirect()->route('chantierNatureFrais.gestionForm')
         ->with('success','Modification avec succès');
   }
 
@@ -228,8 +228,63 @@ class ChantierNatureFraisController extends Controller
             $chantierNatureFrai->delete();
         }
         
-        return redirect()->route('chantierNatureFrais.index')
+        return redirect()->route('chantierNatureFrais.gestionForm')
                         ->with('success','Les natures du frais du chantier sont supprimé avec succes.');
+    }
+
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+           
+            return redirect()->route('chantierNatureFrais.create');
+
+        }
+
+        if (isset($_GET['modifier'])) {
+
+            $chantiers = Chantier::all();
+            // dd ($chantiers);
+            return view('chantierNatureFrais.gestion', compact('chantiers'));
+            }
+            else{
+                $chantiers = Chantier::all();
+
+                return view('chantierNatureFrais.gestion', compact('chantiers'));
+
+            }
+
+        
+    }
+    public function gotoIndex(){
+        if (isset($_GET['chantier_id'])) {
+            $id = $_GET['chantier_id'];
+            $chantier = Chantier::find($id);
+    
+            if (isset($_GET['supprimer'])) {
+               
+                return redirect()->route('chantierNatureFrais.destroyChantierNatureFrais', $id);
+    
+            }
+    
+            if (isset($_GET['modifier2'])) {
+    
+               
+                return redirect()->route('chantierNatureFrais.editNatureFrais', $chantier->id);
+    
+                }
+    
+                if (isset($_GET['consulter'])) {
+    
+                    return redirect()->route('chantierNatureFrais.showNatureFrais',$chantier->id);
+        
+                    }
+          } else {
+              $chantiers = Chantier::all();
+            return view('chantierNatureFrais.gestion', compact('chantiers'))
+                    ->with('error','Pouvez vous choisir une chantier!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
     public function search(){

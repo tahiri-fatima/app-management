@@ -3,7 +3,7 @@
 @section('content')
   
 <div class="container " style="margin-left: 80%;" > 
-            <a class="btn btn-primary" href="{{ route('commandes.show',$commande->id) }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+            <a class="btn btn-primary" href="{{ route('commandes.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
 
 <div class="col  justify-content-center message" > 
@@ -93,8 +93,7 @@
                 </div>      
 
                 <div class=" text-right" style="margin-top: 10px;">
-                    <button type="submit" class="btn btn-primary"> <i class="fa fa-fw fa-plus-circle"> </i> Ajouter</button>
-                    <button type="reset" class="btn btn-info" style="margin-left: 10px;"><i class="fa fa-fw fa-sync" ></i> Réinitialiser</button>
+                    <button type="submit" class="btn btn-primary"> <i class="fa fa-fw fa-edit"> </i> Modifier</button>
                 </div>
                                                  
             </form>
@@ -104,88 +103,4 @@
 <!-- end Formulaire -->
 
 
-
-    <!-- formulaire 
-    <div class="card">
-
-<div class="card-header"><strong> Modifier la commande</strong> </div>
-
-    <div class="card-body">
-        
-        <div class="col-sm-8">
-
-<form action="{{ route('commandes.update',$commande->id) }}" method="POST">
-    @csrf
-   @method('PUT')
-
-    <div class="row justify-content-around">
-        <div class="col-6">
-            <div class="form-group">
-            <label > <strong>Code : <span class="text-danger">*</span></strong></label>
-                <input type="text" name="codecommande" value="{{ $commande->codecommande }}" class="form-control" placeholder="Code">
-            </div>
-        </div>
-
-        <div class="col-6">
-            <div class="form-group">
-            <label><strong>Date de la commande : <span class="text-danger">*</span></strong></label>
-                <input type="date" class="form-control" name="datecommande" value="{{ $commande->datecommande }}" placeholder="Date commande">
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-around">
-        <div class="col-6">
-            <div class="form-group">
-                <label ><strong>Chantier : <span class="text-danger">*</span></strong></label>
-                <div class="select">
-                <select class="form-control" name="chantier_id" >
-                    <option value="{{ $chantier->id }}">{{ $chantier->intitulechantier }}</option>
-                    @foreach($chantiers as $chantier)
-                        <option value="{{ $chantier->id }}">{{ $chantier->intitulechantier }}</option>
-                    @endforeach
-                </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-6">
-            <div class="form-group">
-                <labe><strong>Fournisseur : <span class="text-danger">*</span></strong></label>
-                <div class="select">
-                <select class="form-control" name="fournisseur_id" >
-                    <option value="{{ $fournisseur->id }}">{{ $fournisseur->intitulefournisseur }}</option>
-                    @foreach($fournisseurs as $fournisseur)
-                        <option value="{{ $fournisseur->id }}">{{ $fournisseur->intitulefournisseur }}</option>
-                    @endforeach
-                </select>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-    <div class="col-6">
-                <div class="form-group">
-                    <label><strong>Matériaux : <span class="text-danger">*</span></strong></label>
-                    <div class="select">
-                    <select class="form-control" multiple name="materiaus[]">
-                        @foreach($materiaus as $materiau)
-                            <option value="{{ $materiau->id }}" {{ in_array($materiau->id, old('materiaus') ?: $commande->materiaus->pluck('id')->all()) ? 'selected' : '' }}>{{ $materiau->intitulemateriau }}</option>
-                        @endforeach
-                    </select>
-                    </div>
-                </div>
-            </div>
-    </div>
-
-<div class=" text-right">
-        <button type="submit" class="btn btn-primary"> <i class="fa fa-fw fa-edit"></i> Editer</button>
-</div>
-</div>
-
-</form>
-</div>
-    </div>
-</div>!-->
 @endsection

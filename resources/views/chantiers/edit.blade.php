@@ -5,7 +5,7 @@
 
   
 <div class="container" style="margin-left:75%"> 
-            <a class="btn btn-primary" href="{{ route('chantiers.show',$chantier->id) }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+            <a class="btn btn-primary" href="{{ route('chantiers.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
    <div class="col d-flex justify-content-center message">
     @if ($errors->any())

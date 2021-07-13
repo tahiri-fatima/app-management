@@ -122,7 +122,7 @@ class MaterielController extends Controller
 
         Materiel::where('id', '=',$materiel->id)->update($request->except(['_token','_method']));
     
-         return redirect()->route('materiels.show', [$materiel])
+         return redirect()->route('materiels.gestionForm')
          ->with('success','Modification avec succès');
     }
 
@@ -132,43 +132,73 @@ class MaterielController extends Controller
      * @param  \App\Models\Materiel  $materiel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Materiel $materiel)
+    public function destroyMateriel(Materiel $materiel)
     {
         try {
+          //  dd($materiel->id);
+
             $materiel->delete();
-            return redirect()->route('materiels.index')
+           // dd($a);
+            return redirect()->route('materiels.gestionForm')
                         ->with('success','Materiel supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('materiels.index')
+            return redirect()->route('materiels.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          }
+          }    
         
     }
 
-    public function search(){
-        $search_c = $_GET['code_materiel'];
-        $search_i = $_GET['intitule_materiel'];
 
-        if ($search_c == null){
-            $search_c = '#';
-        }
-        if ($search_i == null){
-            $search_i = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('materiels.create');
         }
 
-        $materiels = Materiel::query()
-        ->where('code_materiel', 'like', "%".$search_c."%")
-        ->orWhere('intitule_materiel', 'like', "%".$search_i."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
+        if (isset($_GET['modifier'])) {
+            $materiels = materiel::all();
+            // dd ($materiels);
+            return view('materiels.gestion', compact('materiels'));
+            }
+            else{
+                $materiels = materiel::all();
+                return view('materiels.gestion', compact('materiels'));
+            }
 
-        if ($materiels->isEmpty()) {
-            return redirect()->route('materiels.index')
-                        ->with('warning',"N'éxiste aucun materiel avec les informations de la recherche");
-        }
         
-        return view('materiels.search', compact('materiels'));
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['materiel_id'])) {
+            $id = $_GET['materiel_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $materiel = Materiel::find($id);
+             // dd($materiel);
+                return redirect()->route('materiels.destroyMateriel', $materiel);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('materiels.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('materiels.show',$id);
+                    }
+          } else {
+            $materiels = materiel::all();
+            // dd ($materiels);
+            return view('materiels.gestion', compact('materiels'))
+                    ->with('error','Pouvez vous choisir un materiel!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
 }

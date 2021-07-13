@@ -276,8 +276,64 @@ class ChantierPersonnelController extends Controller
             $chantierPersonnel->delete();
         }
         
-        return redirect()->route('chantierPersonnels.index')
+        return redirect()->route('chantierPersonnels.gestionForm')
                         ->with('success','Les personnels du chantier sont supprimé avec succes.');
+    }
+
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+           
+            return redirect()->route('chantierPersonnels.create');
+
+        }
+
+        if (isset($_GET['modifier'])) {
+
+            $chantiers = Chantier::all();
+            // dd ($chantiers);
+            return view('chantierPersonnels.gestion', compact('chantiers'));
+            }
+            else{
+                $chantiers = Chantier::all();
+
+                return view('chantierPersonnels.gestion', compact('chantiers'));
+
+            }
+
+        
+    }
+
+    public function gotoIndex(){
+        if (isset($_GET['chantier_id'])) {
+            $id = $_GET['chantier_id'];
+            $chantier = Chantier::find($id);
+    
+            if (isset($_GET['supprimer'])) {
+               
+                return redirect()->route('chantierPersonnels.destroyChantierPersonnels', $id);
+    
+            }
+    
+            if (isset($_GET['modifier2'])) {
+    
+               
+                return redirect()->route('chantierPersonnels.editPersonnels', $chantier->id);
+    
+                }
+    
+                if (isset($_GET['consulter'])) {
+    
+                    return redirect()->route('chantierPersonnels.showPersonnels',$chantier->id);
+        
+                    }
+          } else {
+              $chantiers = Chantier::all();
+            return view('chantierPersonnels.gestion', compact('chantiers'))
+                    ->with('error','Pouvez vous choisir une chantier!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
     public function search(){

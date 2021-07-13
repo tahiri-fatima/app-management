@@ -164,7 +164,7 @@ class ChantierController extends Controller
 
         Chantier::where('id', '=',$chantier->id)->update($request->except(['_token','_method']));
 
-         return redirect()->route('chantiers.show', [$chantier])
+         return redirect()->route('chantiers.gestionForm')
          ->with('success','Modification avec succès');
     }
 
@@ -174,47 +174,73 @@ class ChantierController extends Controller
      * @param  \App\Models\Chantier  $chantier
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Chantier $chantier)
+    public function destroyChantier(Chantier $chantier)
     {
         try {
+          //  dd($chantier->id);
+
             $chantier->delete();
-            return redirect()->route('chantiers.index')
-                    ->with('success','Chantier supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('chantiers.gestionForm')
+                        ->with('success','Chantier supprimé avec succes.');
         
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('chantiers.index')
+            return redirect()->route('chantiers.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
           }    
         
     }
 
-    
 
-    public function search(){
-        $search_c = $_GET['codechantier'];
-        $search_i = $_GET['intitulechantier'];
-
-        if ($search_c == null){
-            $search_c = '#';
-        }
-        if ($search_i == null){
-            $search_i = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('chantiers.create');
         }
 
-        $chantiers = Chantier::query()
-        ->where('code_chantier', 'like', "%".$search_c."%")
-        ->orWhere('intitule_chantier', 'like', "%".$search_i."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
+        if (isset($_GET['modifier'])) {
+            $chantiers = chantier::all();
+            // dd ($chantiers);
+            return view('chantiers.gestion', compact('chantiers'));
+            }
+            else{
+                $chantiers = chantier::all();
+                return view('chantiers.gestion', compact('chantiers'));
+            }
 
-        if ($chantiers->isEmpty()) {
-           // dd($chantiers);
-            return redirect()->route('chantiers.index')
-                        ->with('warning',"N'éxiste aucun chantier avec les informations de la recherche");
-        }
         
-        return view('chantiers.search', compact('chantiers'));
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['chantier_id'])) {
+            $id = $_GET['chantier_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $chantier = Chantier::find($id);
+             // dd($chantier);
+                return redirect()->route('chantiers.destroyChantier', $chantier);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('chantiers.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('chantiers.show',$id);
+                    }
+          } else {
+            $chantiers = chantier::all();
+            // dd ($chantiers);
+            return view('chantiers.gestion', compact('chantiers'))
+                    ->with('error','Pouvez vous choisir un chantier!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
 

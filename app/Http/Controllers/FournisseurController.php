@@ -122,7 +122,7 @@ class FournisseurController extends Controller
        
         Fournisseur::where('id',$fournisseur->id)->update($request->except(['_token','_method']));
 
-         return redirect()->route('fournisseurs.show', [$fournisseur]) 
+         return redirect()->route('fournisseurs.gestionForm')
          ->with('success','Modification avec succès');
     }
 
@@ -132,45 +132,69 @@ class FournisseurController extends Controller
      * @param  \App\Models\Fournisseur  $fournisseur
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fournisseur $fournisseur)
+    public function destroyFournisseur(Fournisseur $fournisseur)
     {
         try {
+
             $fournisseur->delete();
-        return redirect()->route('fournisseurs.index')
-                        ->with('success','fournisseur supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('fournisseurs.gestionForm')
+                        ->with('success','Fournisseur supprimé avec succes.');
         
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('fournisseurs.index')
+            return redirect()->route('fournisseurs.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          } 
+          }    
         
     }
 
-    public function search(){
-        $search_c = $_GET['code_fournisseur'];
-        $search_d = $_GET['intitule_fournisseur'];
 
-        if ($search_c == null){
-            $search_c = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('fournisseurs.create');
         }
-        if ($search_d == null){
-            $search_d = '#';
-        }
+
+        if (isset($_GET['modifier'])) {
+            $fournisseurs = Fournisseur::all();
+            return view('fournisseurs.gestion', compact('fournisseurs'));
+            }
+            else{
+                $fournisseurs = fournisseur::all();
+                return view('fournisseurs.gestion', compact('fournisseurs'));
+            }
+
         
+    }
 
-        $fournisseurs = Fournisseur::query()
-        ->where('code_fournisseur', 'like', "%".$search_c."%")
-        ->orwhere('intitule_fournisseur', 'like', "%".$search_d."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
+    public function gotoIndex(){
+        if(isset($_GET['fournisseur_id'])) {
+            $id = $_GET['fournisseur_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $fournisseur = fournisseur::find($id);
+                return redirect()->route('fournisseurs.destroyFournisseur', $fournisseur);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('fournisseurs.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
 
-        if ($fournisseurs->isEmpty()) {
-            return redirect()->route('fournisseurs.index')
-                        ->with('warning',"N'éxiste aucun fournisseur avec les informations de la recherche");
-        }
-        
-        return view('fournisseurs.search', compact('fournisseurs'));
+                    return redirect()->route('fournisseurs.show',$id);
+                    }
+          } else {
+            $fournisseurs = Fournisseur::all();
+            return view('fournisseurs.gestion', compact('fournisseurs'))
+                    ->with('error','Pouvez vous choisir un fournisseur!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
     public function getCommandes($id){

@@ -132,7 +132,7 @@ class OperationController extends Controller
 
         Operation::where('id', '=',$operation->id)->update($request->except(['_token','_method']));
         
-         return redirect()->route('operations.show', [$operation])
+         return redirect()->route('operations.gestionForm')
          ->with('success','Modification avec succès');
     }
 
@@ -142,44 +142,73 @@ class OperationController extends Controller
      * @param  \App\Models\Operation  $operation
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Operation $operation)
+    public function destroyOperation(Operation $operation)
     {
         try {
+          //  dd($operation->id);
+
             $operation->delete();
-            return redirect()->route('operations.index')
-                        ->with('success','operation supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('operations.gestionForm')
+                        ->with('success','Operation supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('operations.index')
+            return redirect()->route('operations.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          }
+          }    
         
     }
+
+
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('operations.create');
+        }
+
+        if (isset($_GET['modifier'])) {
+            $operations = operation::all();
+            // dd ($operations);
+            return view('operations.gestion', compact('operations'));
+            }
+            else{
+                $operations = operation::all();
+                return view('operations.gestion', compact('operations'));
+            }
+
+        
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['operation_id'])) {
+            $id = $_GET['operation_id'];
     
-    public function search(){
-        $search_c = $_GET['code_operation'];
-        $search_d = $_GET['designation_operation'];
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $operation = Operation::find($id);
+             // dd($operation);
+                return redirect()->route('operations.destroyOperation', $operation);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('operations.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
 
-        if ($search_c == null){
-            $search_c = '#';
-        }
-        if ($search_d == null){
-            $search_d = '#';
-        }
-        
-
-        $operations = Operation::query()
-        ->where('code_operation', 'like', "%".$search_c."%")
-        ->orwhere('designation_operation', 'like', "%".$search_d."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        if ($operations->isEmpty()) {
-            return redirect()->route('operations.index')
-                        ->with('warning',"N'éxiste aucune operation avec les informations de la recherche");
-        }
-        
-        return view('operations.search', compact('operations'));
+                    return redirect()->route('operations.show',$id);
+                    }
+          } else {
+            $operations = operation::all();
+            // dd ($operations);
+            return view('operations.gestion', compact('operations'))
+                    ->with('error','Pouvez vous choisir un operation!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
     public function getEtatsRealisation(){

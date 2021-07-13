@@ -3,7 +3,7 @@
 @section('content')
   
 <div class="container " style="margin-left:70%" > 
-            <a class="btn btn-primary" href="{{ route('fournisseurs.show',$fournisseur->id) }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+            <a class="btn btn-primary" href="{{ route('fournisseurs.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
 
   <div class="col d-flex justify-content-center message" > 
@@ -81,59 +81,4 @@
     </div>
 <!-- end formulaire -->
 
-    <!-- formulaire 
-    <div class="card">
-
-<div class="card-header"><strong> Modifier la réparation</strong> </div>
-
-    <div class="card-body">
-        
-        <div class="col-sm-8">
-
-<form action="{{ route('fournisseurs.update',$fournisseur->id) }}" method="POST">
-    @csrf
-   @method('PUT')
-
-    <div class="row justify-content-around">
-        <div class="col-6">
-            <div class="form-group">
-                <strong>Code : <span class="text-danger">*</span></strong>
-                <input type="text" name="codefournisseur" value="{{ $fournisseur->codefournisseur }}" class="form-control" placeholder="Code">
-            </div>
-        </div>
-
-        <div class="col-6">
-                <div class="form-group">
-                    <strong>Intitulé : <span class="text-danger">*</span></strong>
-                    <input type="text" class="form-control" name="intitulefournisseur" value="{{ $fournisseur->intitulefournisseur }}" placeholder="Intitulé réparation">
-                </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-around">
-        <div class="col-6">
-            <div class="form-group">
-                <strong>Télephone : <span class="text-danger">*</span></strong>
-                <input type="telephone" class="form-control" name="telephonefournisseur" value="{{ $fournisseur->telephonefournisseur }}" placeholder="Télephone">
-            </div>
-        </div>
-        
-        <div class="col-6">
-            <div class="form-group">
-                <strong>Email : <span class="text-danger">*</span></strong>
-                <input type="email" class="form-control" name="emailfournisseur" value="{{ $fournisseur->emailfournisseur }}" placeholder="Email">
-            </div>
-        </div>
-    </div>
-
-<div class=" text-right">
-        <button type="submit" class="btn btn-primary"> <i class="fa fa-fw fa-edit"></i> Editer</button>
-</div>
-</div>
-
-</form>
-</div>
-    </div>
-</div>
-!-->
 @endsection

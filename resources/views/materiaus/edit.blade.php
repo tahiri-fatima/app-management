@@ -4,7 +4,7 @@
 
 
 <div class="container " style="margin-left: 70%;" > 
-            <a class="btn btn-primary" href="{{ route('materiaus.show',$materiau->id) }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+            <a class="btn btn-primary" href="{{ route('materiaus.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
 
 <div class="col d-flex justify-content-center message" > 
@@ -72,56 +72,4 @@
 <!-- end Formulaire -->
 
 
-    <!-- formulaire 
-    <div class="card" style="width:50%;">
-
-<div class="card-header"><strong> Modifier le matériau</strong> </div>
-
-    <div class="card-body">
-        
-        <div class="col-sm-8">
-
-<form action="{{ route('materiaus.update',$materiau->id) }}" method="POST">
-    @csrf
-   @method('PUT')
-
-<div class="row justify-content-around">
-    <div >
-        <div class="form-group">
-            <strong>Code : <span class="text-danger">*</span></strong>
-            <input type="text" class="form-control" name="codemateriau" value="{{ $materiau->codemateriau }}" class="form-control" placeholder="Code">
-        </div>
-    </div>
-</div>
-
-<div class="row justify-content-around">
-    <div >
-        <div class="form-group">
-            <strong>Intitulé matériau : <span class="text-danger">*</span></strong>
-            <input type="text" class="form-control" value="{{ $materiau->intitulemateriau }}" name="intitulemateriau" placeholder="intitulé matériau">
-        </div>
-    </div>
-</div>
-
-<div class="row justify-content-around">
-    <div >
-        <div class="form-group">
-            <strong>Prix unitaire matériau : <span class="text-danger">*</span></strong>
-            <input type="double" name="prixunitmateriau" class="form-control" value="{{ $materiau->prixunitmateriau }}" placeholder="Prix unitaire matériau">
-        </div>
-    </div>
-</div>
-
-
-
-<div class=" text-right">
-        <button type="submit" class="btn btn-primary"> <i class="fa fa-fw fa-edit"></i> Editer</button>
-</div>
-</div>
-
-</form>
-</div>
-    </div>
-</div>
-!-->
 @endsection

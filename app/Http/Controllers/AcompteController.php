@@ -136,7 +136,8 @@ class AcompteController extends Controller
 
         Acompte::where('id',$acompte->id)->update($request->except(['_token','_method']));
 
-        return redirect()->route('acomptes.show', [$acompte])
+        $acomptes = acompte::all();
+        return redirect()->route('acomptes.gestionForm')
                             ->with('success','Modification avec succès');    
     }
 
@@ -146,38 +147,73 @@ class AcompteController extends Controller
      * @param  \App\Models\Acompte  $acompte
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Acompte $acompte)
+    public function destroyAcompte(Acompte $acompte)
     {
         try {
+          //  dd($acompte->id);
+
             $acompte->delete();
-            return redirect()->route('acomptes.index')
-                        ->with('success','acompte supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('acomptes.gestionForm')
+                        ->with('success','Acompte supprimé avec succes.');
         
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('acomptes.index')
+            return redirect()->route('acomptes.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
           }    
         
     }
 
-    public function search(){
-        $search_c = $_GET['codeacompte'];
 
-        if ($search_c == null){
-            $search_c = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('acomptes.create');
         }
-        
-        $acomptes = Acompte::query()
-        ->where('code_acompte', 'like', "%".$search_c."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
 
-        if ($acomptes->isEmpty()) {
-            return redirect()->route('acomptes.index')
-                        ->with('warning',"N'éxiste aucune acompte avec les informations de la recherche");
-        }
+        if (isset($_GET['modifier'])) {
+            $acomptes = acompte::all();
+            // dd ($acomptes);
+            return view('acomptes.gestion', compact('acomptes'));
+            }
+            else{
+                $acomptes = acompte::all();
+                return view('acomptes.gestion', compact('acomptes'));
+            }
+
         
-        return view('acomptes.search', compact('acomptes'));
     }
+
+    public function gotoIndex(){
+        if(isset($_GET['acompte_id'])) {
+            $id = $_GET['acompte_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $acompte = Acompte::find($id);
+             // dd($acompte);
+                return redirect()->route('acomptes.destroyAcompte', $acompte);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('acomptes.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('acomptes.show',$id);
+                    }
+          } else {
+            $acomptes = acompte::all();
+            // dd ($acomptes);
+            return view('acomptes.gestion', compact('acomptes'))
+                    ->with('error','Pouvez vous choisir un acompte!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
+    }
+    
 }

@@ -196,7 +196,7 @@ class PersonnelController extends Controller
     
         $role = Role::where('id', '=', $request->role_id)->first();
         $personnel->assignRole($role);
-        return redirect()->route('personnels.show', [$personnel])
+        return redirect()->route('personnels.gestionForm')
         ->with('success','Modification avec succès');
         
     }
@@ -207,52 +207,73 @@ class PersonnelController extends Controller
      * @param  \App\Models\Personnel  $personnel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Personnel $personnel)
+    public function destroyPersonnel(Personnel $personnel)
     {
         try {
+          //  dd($personnel->id);
+
             $personnel->delete();
-            return redirect()->route('personnels.index')
-                        ->with('success','Personne supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('personnels.gestionForm')
+                        ->with('success','Personnel supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('personnels.index')
+            return redirect()->route('personnels.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          }
+          }    
         
     }
 
 
-    public function search(){
-        $search_c = $_GET['code_personne'];
-        $search_n = $_GET['nom_personne'];
-        $search_p = $_GET['prenom_personne'];
-
-        if ($search_n == null){
-            $search_n = '#';
-        }
-        if ($search_c == null){
-            $search_c = '#';
-        }
-        if ($search_p == null){
-            $search_p = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('personnels.create');
         }
 
-        $personnels = Personnel::query()
-        ->where('code_personne', 'like', "%".$search_c."%")
-        ->orWhere('nom_personne', 'like', "%".$search_n."%")
-        ->orWhere('prenom_personne', 'like', "%".$search_p."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
+        if (isset($_GET['modifier'])) {
+            $personnels = personnel::all();
+            // dd ($personnels);
+            return view('personnels.gestion', compact('personnels'));
+            }
+            else{
+                $personnels = personnel::all();
+                return view('personnels.gestion', compact('personnels'));
+            }
 
-        if ($personnels->isEmpty()) {
-            return redirect()->back()
-                        ->with('error_code',0);
-        }
-        else{
-            return view('personnels.search', compact('personnels'));
-
-        }
+        
     }
 
+    public function gotoIndex(){
+        if(isset($_GET['personnel_id'])) {
+            $id = $_GET['personnel_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $personnel = Personnel::find($id);
+             // dd($personnel);
+                return redirect()->route('personnels.destroyPersonnel', $personnel);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('personnels.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('personnels.show',$id);
+                    }
+          } else {
+            $personnels = personnel::all();
+            // dd ($personnels);
+            return view('personnels.gestion', compact('personnels'))
+                    ->with('error','Pouvez vous choisir un personnel!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
+    }
  
 }

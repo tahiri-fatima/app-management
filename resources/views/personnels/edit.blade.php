@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="container " style="margin-left: 70%;" > 
-            <a class="btn btn-primary" href="{{ route('personnels.show',$personnel->id) }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+            <a class="btn btn-primary" href="{{ route('personnels.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
 
 <div class="col justify-content-center" >
@@ -83,17 +83,17 @@
     @csrf
    @method('PUT')
 
-            <div class="row justify-content-around">
+   <div class="row justify-content-around">
                  <div class="col-6">
                     <div class="form-group form-primary form-static-label">
-                        <input type="text" name="code_personne" class="form-control" value="{{ $personnel->code_personne }}" placeholder="Entrer le code du personnel">
+                        <input type="text" name="code_personne" value="{{$personnel->code_personne }}" class="form-control" placeholder="Entrer le code du personnel">
                         <span class="form-bar"></span>
                         <label class="float-label">Code du personnel<span class="text-danger">*</span> </label>
                     </div>
                  </div>
                  <div class="col-6">
                     <div class="form-group form-primary form-static-label">
-                        <input type="text" name="nom_personne" class="form-control" value="{{ $personnel->nom_personne }}" placeholder="Entrer le nom du personnel">
+                        <input type="text" name="nom_personne" value="{{$personnel->nom_personne }}"  class="form-control" placeholder="Entrer le nom du personnel">
                         <span class="form-bar"></span>
                         <label class="float-label">Nom du personnel<span class="text-danger">*</span> </label>
                     </div>
@@ -103,76 +103,83 @@
             <div class="row justify-content-around">
                      <div class="col-6">
                         <div class="form-group form-primary form-static-label">
-                            <input type="text" name="prenom_personne" class="form-control" value="{{ $personnel->prenom_personne }}" placeholder="Entrer le prénom du personnel">
+                            <input type="text" name="prenom_personne" value="{{$personnel->prenom_personne }}"  class="form-control" placeholder="Entrer le prénom du personnel">
                             <span class="form-bar"></span>
                             <label class="float-label">Prénom du personnel<span class="text-danger">*</span> </label>
                         </div>
                      </div>
-                     <div class="col-6">
-                        <div class="form-group form-primary form-static-label">
-                           <input type="text" name="qualification" class="form-control" value="{{ $qual->designation_qual }}" placeholder="Entrer la qualification">
-                            <span class="form-bar"></span>
-                            <label class="float-label">Qualification<span class="text-danger">*</span> </label>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row justify-content-around">
                      <div class="col-6">
                         <div class="form-group form-primary form-static-label">
-                           <input type="text" name="fonction" class="form-control" value="{{ $personnel->fonction }}" placeholder="Entrer la foction">
+                           <input type="text" name="fonction" value="{{$personnel->fonction }}"  class="form-control" placeholder="Entrer la foction">
                             <span class="form-bar"></span>
                             <label class="float-label">Fonction<span class="text-danger">*</span> </label>
                         </div>
                     </div>
+                   
+                </div>
+
+                <div class="row justify-content-around">
                     <div class="col-6">
                         <div class="form-group form-primary form-static-label">
-                            <input type="text" name="num_cnss" class="form-control" value="{{ $personnel->num_cnss }}" placeholder="Entrer le numéro de la CNSS">
+                            <input type="text" name="num_cnss" value="{{$personnel->num_cnss }}"  class="form-control" placeholder="Entrer le numéro de la CNSS">
                             <span class="form-bar"></span>
                             <label class="float-label">Numéro de la CNSS <span class="text-danger">*</span> </label>
                         </div>
                      </div>
-                </div>
 
-                <div class="row justify-content-around">
                      <div class="col-6">
                         <div class="form-group form-primary form-static-label">
-                            <input type="double" name="montant_cnss" class="form-control" value="{{ $personnel->montant_cnss }}" placeholder="Entrer le montant de la CNSS">
+                            <input type="double" name="montant_cnss" value="{{$personnel->montant_cnss }}"  class="form-control" placeholder="Entrer le montant de la CNSS">
                             <span class="form-bar"></span>
                             <label class="float-label">Montant de la CNSS<span class="text-danger">*</span> </label>
                         </div>
                      </div>
+                   
+                </div>
+
+    
+
+                <div class="row justify-content-around">
                      <div class="col-6">
-                     <div class="form-group form-primary form-static-label">
-                            <input type="date" name="date_embauche" class="form-control" value="{{ $personnel->date_embauche }}">
+                        <div class="form-group form-primary form-static-label">
+                            <input type="date" name="date_embauche" value="{{$personnel->date_embauche }}"  class="form-control" placeholder="Entrer le numéro de téléphone" >
                             <span class="form-bar"></span>
                             <label class="float-label">Date d'embauche<span class="text-danger">*</span> </label>
                         </div>
                      </div>
-                    </div>
-             
-
-
-                <div class="row justify-content-around">
-                     
-                       
 
                      <div class="col-6">
                         <div class="form-group form-primary form-static-label">
-                            <input type="double" name="tele" class="form-control" value="{{ $personnel->tele }}" placeholder="Entrer le numéro de téléphone">
+                            <input type="text" name="tele" value="{{$personnel->tele }}"  class="form-control" >
                             <span class="form-bar"></span>
                             <label class="float-label">Numéro de téléphone<span class="text-danger">*</span> </label>
                         </div>
-                    </div>
-              
+                     </div>
+                </div>
 
-               
+                <div class="row justify-content-around"> 
+                <div class="col-6">
+                        <div class="form-group form-primary form-static-label">
+                            <label class="select-label " >Qualification <span class="text-danger">*</span> </label>
+                                <div class="select">
+                                    <select class="form-control" name="qualification_id">
+                                        <option value="{{ $qual->id }}" >{{$qual->designation_qual  }}</option>
+                                        @foreach($qualifications as $qual)
+                                            <option value="{{ $qual->id }}">{{ $qual->designation_qual }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>                
+                            <span class="form-bar"></span> 
+                        </div>
+                    </div>
+
                     <div class="col-6">
                         <div class="form-group form-primary form-static-label">
                             <label class="select-label " >Rôle <span class="text-danger">*</span> </label>
                                 <div class="select">
-                                    <select class="form-control" name="role_id" >
-                                        <option value="{{$userRole->id}}">{{ $userRole->name }}</option>
+                                    <select class="form-control" name="role_id">
+                                        <option value="{{ $userRole->id }}">{{$userRole->name }} </option>
                                         @foreach($roles as $role)
                                             <option value="{{ $role->id }}">{{ $role->name }}</option>
                                         @endforeach

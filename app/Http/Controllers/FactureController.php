@@ -73,8 +73,8 @@ class FactureController extends Controller
 
         $montant_en_lettre = Facture::numberTowords($request->montant_facture);
         $request->request->add(['montant_en_lettre' => $montant_en_lettre]); //add request
-        $cumul_acompte = 0.0;
-        $request->request->add(['cumul_acompte' => $cumul_acompte]); //add request
+        $cumul_facture = 0.0;
+        $request->request->add(['cumul_facture' => $cumul_facture]); //add request
          $facture = Facture::where('code_facture', '=', $request->code_facture)->first();
         if ($facture === null) {
             $commande = Commande::where('id', '=', $request->commande_id)->first();
@@ -152,7 +152,7 @@ class FactureController extends Controller
 
         Facture::where('id', '=',$facture->id)->update($request->except(['_token','_method']));
 
-         return redirect()->route('factures.show', [$facture])
+         return redirect()->route('factures.gestionForm')
          ->with('success','Modification avec succès');
     }
 
@@ -162,39 +162,72 @@ class FactureController extends Controller
      * @param  \App\Models\Facture  $facture
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Facture $facture)
+    public function destroyFacture(Facture $facture)
     {
         try {
+          //  dd($facture->id);
+
             $facture->delete();
-            return redirect()->route('factures.index')
-                        ->with('success','facture supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('factures.gestionForm')
+                        ->with('success','Facture supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('factures.index')
+            return redirect()->route('factures.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
+          }    
+        
+    }
+
+
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('factures.create');
+        }
+
+        if (isset($_GET['modifier'])) {
+            $factures = facture::all();
+            // dd ($factures);
+            return view('factures.gestion', compact('factures'));
+            }
+            else{
+                $factures = facture::all();
+                return view('factures.gestion', compact('factures'));
+            }
+
+        
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['facture_id'])) {
+            $id = $_GET['facture_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $facture = Facture::find($id);
+             // dd($facture);
+                return redirect()->route('factures.destroyFacture', $facture);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('factures.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('factures.show',$id);
+                    }
+          } else {
+            $factures = facture::all();
+            // dd ($factures);
+            return view('factures.gestion', compact('factures'))
+                    ->with('error','Pouvez vous choisir un facture!');
+             // var_dump($e->errorInfo);
           } 
-        
-    }
-
-    public function search(){
-        $search_c = $_GET['code_facture'];
-
-        if ($search_c == null){
-            $search_c = '#';
-        }
-        
-        $factures = Facture::query()
-        ->where('code_facture', 'like', "%".$search_c."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        if ($factures->isEmpty()) {
-            return redirect()->route('factures.index')
-                        ->with('warning',"N'éxiste aucune facture avec les informations de la recherche");
-        }
-        
-        return view('factures.search', compact('factures'));
-    }
-
    
+  
+    }
 }

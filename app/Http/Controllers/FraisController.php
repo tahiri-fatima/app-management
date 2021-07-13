@@ -143,7 +143,7 @@ class FraisController extends Controller
         }
 
         Frais::where('id', '=',$frai->id)->update($request->except(['_token','_method']));
-        return redirect()->route('frais.show', [$frai])
+        return redirect()->route('frais.gestionForm')
         ->with('success','Modification avec succès');
     }
 
@@ -153,36 +153,74 @@ class FraisController extends Controller
      * @param  \App\Models\Frais  $frais
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Frais $frai)
+    public function destroyFrais(Frais $frai)
     {
         try {
+          //  dd($frai->id);
+
             $frai->delete();
-            return redirect()->route('frais.index')
-                        ->with('success','frais supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('frais.gestionForm')
+                        ->with('success','Frais supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('frais.index')
+            return redirect()->route('frais.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          }
+          }    
         
     }
 
-    public function search(){
-        $search_c = $_GET['code_frais'];
 
-        $frais = Frais::query()
-        ->where('code_frais', 'like', "%".$search_c."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        if ($frais->isEmpty()) {
-            return redirect()->back()
-                        ->with('error_code',0);
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('frais.create');
         }
+
+        if (isset($_GET['modifier'])) {
+            $frais = Frais::all();
+            // dd ($frais);
+            return view('frais.gestion', compact('frais'));
+            }
+            else{
+                $frais = Frais::all();
+                return view('frais.gestion', compact('frais'));
+            }
+
         
-        return view('frais.search', compact('frais'));
     }
 
+    public function gotoIndex(){
+        if(isset($_GET['frais_id'])) {
+            $id = $_GET['frais_id'];
+    
+            if (isset($_GET['supprimer'])) {
+            //   dd($_GET['supprimer']);
+             $frai = Frais::find($id);
+             // dd($frai);
+                return redirect()->route('frais.destroyFrais', $frai);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('frais.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                 //  dd($_GET['consulter']);
+
+                    return redirect()->route('frais.show',$id);
+                    }
+          } else {
+            $frais = Frais::all();
+            // dd ($frais);
+            return view('frais.gestion', compact('frais'))
+                    ->with('error','Pouvez vous choisir un frai!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
+    }
     public function getFrais($id){
         $frais = Frais::where('chantier_id', '=', $id)->get();
         $chantier = Chantier::where('id', '=', $id)->first();

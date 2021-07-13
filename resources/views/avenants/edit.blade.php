@@ -5,7 +5,7 @@
 
 
 <div class="container " style="margin-left:70%"> 
-    <a class="btn btn-primary" href="{{ route('avenants.show',$avenant->id) }}"  ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+    <a class="btn btn-primary" href="{{ route('avenants.gestionForm') }}"  ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
   
 <div class="col d-flex justify-content-center">

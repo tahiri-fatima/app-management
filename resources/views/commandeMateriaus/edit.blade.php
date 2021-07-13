@@ -5,7 +5,7 @@
 
   
 <div class="container " style="margin-left: 80%;" > 
-            <a class="btn btn-primary" href="{{ route('commandeMateriaus.showMateriaux',$commande->id) }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+            <a class="btn btn-primary" href="{{ route('commandeMateriaus.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
 
 <div class="col d-flex justify-content-center message" > 
@@ -133,7 +133,6 @@
                    
                 <div class=" text-right" style="margin-top: 10px;">
                     <button type="submit" class="btn btn-primary"> <i class="fa fa-fw fa-plus-circle" > </i> Modifier</button>
-                    <button type="reset" class="btn btn-info" style="margin-left: 10px;"><i class="fa fa-fw fa-sync" ></i> Réinitialiser</button>
                 </div>
                                                  
             </form>

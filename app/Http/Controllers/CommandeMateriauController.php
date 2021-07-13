@@ -32,7 +32,7 @@ class CommandeMateriauController extends Controller
      */
     public function index()
     {
-        $commandeMateriaus = CommandeMateriau::all();
+      /*  $commandeMateriaus = CommandeMateriau::all();
       //  dd($commandeMateriaus);
       $commandes = [];
 
@@ -45,9 +45,9 @@ class CommandeMateriauController extends Controller
             if(!in_array ( $c, $commandes)){
                 array_push($commandes, $c);
             }
-        } 
+        } */
       //  dd($commandes);
-        return view('commandeMateriaus.index', compact('commandes'));
+        return view('commandeMateriaus.index');
     }
 
     /**
@@ -273,7 +273,8 @@ class CommandeMateriauController extends Controller
 
                  
         }     
-        return redirect()->route('commandeMateriaus.showMateriaux', [$commande]) 
+        $commandes = Commande::all();
+        return redirect()->route('commandeMateriaus.gestionForm', [$commande]) 
         ->with('success','Modification avec succès');
     }
 
@@ -287,60 +288,35 @@ class CommandeMateriauController extends Controller
     {
         $commandeMateriaus = CommandeMateriau::where('commande_id', '=', $commande->id)->get();
         //dd($commande);
-        foreach ($commandeMateriaus as $commandeMateriau){
-            $commandeMateriau->delete();
-        }
-        
-        return redirect()->route('commandeMateriaus.index')
-                        ->with('success','Les matériaux de la commande sont supprimé avec succes.');
-    }
+        if ($commandeMateriaus->isEmpty()){
+          
+            
+            $commandes = Commande::all();
+            // dd ($commandes);
+             return redirect()->route('commandeMateriaus.gestionForm', compact('commandes'))
+                    ->with('warning','Cette commande n\'a pas des matériaux!');
 
+        }else{
+            foreach ($commandeMateriaus as $commandeMateriau){
+                $commandeMateriau->delete();
+            }
     
-    public function search(){
-        $search_c = $_GET['code_commande'];
-        if ($search_c === ''){
-            return redirect()->back();
-        }
-        // get chantier
-        $commande = Commande::where('code_commande', '=', $search_c)->first();
-        if ($commande === null){
-            return redirect()->route('commandes.listeMateriauxCommande')
-                         ->with('warning',"N'éxiste aucune commande avec ce code");
-        }
-        //
-        $commandeMateriau = CommandeMateriau::where('commande_id', '=', $commande->id)->first();
-        if ($commandeMateriau === null) {
-            // dd($chantiers);
-             return redirect()->route('commandes.listeMateriauxCommande')
-                         ->with('warning',"Cette commande n'a pas encore des matériaux");
-         }
-         //dd($chantier);
-         return redirect()->route('commandes.getMateriaux',$commande->id);
-/*
-        $search_c = $_GET['code_commande'];
-        $search_m = $_GET['code_materiau'];
+            $commande=Commande::find($commande->id);
+            $commande->total_commande = 0.0;
+            $commande->update();
+            
+            $commandes = Commande::all();
+            // dd ($commandes);
+             return redirect()->route('commandeMateriaus.gestionForm', compact('commandes'))
+                    ->with('success','Les matériaux de la commande sont supprimé avec succes.');
 
-        $commandeMateriaus = null;
-        $commande = Commande::where('code_commande', '=', $search_c)->first();
-        $materiau = Materiau::where('code_materiau', '=', $search_m)->first();
-        
-        if($commande != null && $materiau != null){
-            $commandeMateriaus = CommandeMateriau::query()
-            ->where('commande_id', '=', $commande->id)
-            ->where('materiau_id', '=', $materiau->id)
-            ->get();
-        }elseif ($commande == null && $materiau != null){
-            $commandeMateriaus = CommandeMateriau::query()
-                ->where('materiau_id', '=', $materiau->id)
-                ->get();
-        }elseif($materiau == null && $commande != null){
-            $commandeMateriaus = CommandeMateriau::query()
-            ->where('commande_id', '=', $commande->id)
-            ->get();
         }
- 
-        return view('commandeMateriaus.search', compact('commandeMateriaus'));*/
+       
+        
+                        
     }
+
+ 
 
 
     public function DetailPrixMateriaux($id){
@@ -417,6 +393,62 @@ class CommandeMateriauController extends Controller
          
          return redirect()->route('commandeMateriaus.showMateriaux',$commande->id);
 
+    }
+
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+           
+            return redirect()->route('commandeMateriaus.create');
+
+        }
+
+        if (isset($_GET['modifier'])) {
+
+            $commandes = Commande::all();
+            // dd ($commandes);
+            return view('commandeMateriaus.gestion', compact('commandes'));
+            }
+            else{
+                $commandes = Commande::all();
+
+                return view('commandeMateriaus.gestion', compact('commandes'));
+
+            }
+
+        
+    }
+
+    public function gotoIndex(){
+        if (isset($_GET['commande_id'])) {
+            $id = $_GET['commande_id'];
+            $commande = Commande::find($id);
+    
+            if (isset($_GET['supprimer'])) {
+               
+                return redirect()->route('commandeMateriaus.destroyCommandeMateriaux', $id);
+    
+            }
+    
+            if (isset($_GET['modifier2'])) {
+    
+               
+                return redirect()->route('commandeMateriaus.editMateriaux', $commande->id);
+    
+                }
+    
+                if (isset($_GET['consulter'])) {
+    
+                    return redirect()->route('commandeMateriaus.showMateriaux',$commande->id);
+        
+                    }
+          } else {
+              $commandes = Commande::all();
+            return view('commandeMateriaus.gestion', compact('commandes'))
+                    ->with('error','Pouvez vous choisir une commande!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
     
 }

@@ -293,7 +293,7 @@ class ChantierOperationReelController extends Controller
  
                     $k++;
         }
-      return redirect()->route('chantierOperationReels.showOperations', [$chantier])
+      return redirect()->route('chantierOperationReels.gestionForm')
       ->with('success','Modification avec succès');
 
     }
@@ -311,10 +311,65 @@ class ChantierOperationReelController extends Controller
             $chantierOperation->delete();
         }
         
-        return redirect()->route('chantierOperationReels.index')
+        return redirect()->route('chantierOperationReels.gestionForm')
                         ->with('success','Les opérations du chantier sont supprimé avec succes.');
  
     }
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+           
+            return redirect()->route('chantierOperationReels.create');
+
+        }
+
+        if (isset($_GET['modifier'])) {
+
+            $chantiers = Chantier::all();
+            // dd ($chantiers);
+            return view('chantierOperationReels.gestion', compact('chantiers'));
+            }
+            else{
+                $chantiers = Chantier::all();
+
+                return view('chantierOperationReels.gestion', compact('chantiers'));
+
+            }
+
+        
+    }
+    public function gotoIndex(){
+        if (isset($_GET['chantier_id'])) {
+            $id = $_GET['chantier_id'];
+            $chantier = Chantier::find($id);
+    
+            if (isset($_GET['supprimer'])) {
+               
+                return redirect()->route('chantierOperationReels.destroyChantierOperations', $id);
+    
+            }
+    
+            if (isset($_GET['modifier2'])) {
+    
+               
+                return redirect()->route('chantierOperationReels.editOperations', $chantier->id);
+    
+                }
+    
+                if (isset($_GET['consulter'])) {
+    
+                    return redirect()->route('chantierOperationReels.showOperations',$chantier->id);
+        
+                    }
+          } else {
+              $chantiers = Chantier::all();
+            return view('chantierOperationReels.gestion', compact('chantiers'))
+                    ->with('error','Pouvez vous choisir une chantier!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
+    }
+    
 
     public function search(){
 

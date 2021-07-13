@@ -44,69 +44,110 @@ Route::get('/', function () {
 });
 
 Route::resource ('personnels' , PersonnelController::class);
-Route::get('personnel/search', [PersonnelController::class, 'search'])->name('personnels.search');
+Route::get('personnel/gotoIndex', [PersonnelController::class, 'gotoIndex'])->name('personnels.gotoIndex');
+Route::get('personnel/gestionForm', [PersonnelController::class, 'gestionForm'])->name('personnels.gestionForm');
+Route::get('personnel/destroyPersonnel/{personnel}', [PersonnelController::class, 'destroyPersonnel'])->name('personnels.destroyPersonnel');
 //Route::get('personnel/search', 'PersonnelController@search')->name('personnels.search');
 
 Route::resource ('materiels' , MaterielController::class);
-Route::get('materiel/search', [MaterielController::class, 'search'])->name('materiels.search');
+Route::get('materielmateriel/gotoIndex', [MaterielController::class, 'gotoIndex'])->name('materiels.gotoIndex');
+Route::get('materielmateriel/gestionForm', [MaterielController::class, 'gestionForm'])->name('materiels.gestionForm');
+Route::get('materielmateriel/destroyMateriel/{materielmateriel}', [MaterielController::class, 'destroyMateriel'])->name('materiels.destroyMateriel');
 
 Route::resource ('consommationMateriels' , ConsommationMaterielController::class);
-Route::get('consommationMateriel/search', [ConsommationMaterielController::class, 'search'])->name('consommationMateriels.search');
+Route::get('consommationMateriel/gotoIndex', [ConsommationMaterielController::class, 'gotoIndex'])->name('consommationMateriels.gotoIndex');
+Route::get('consommationMateriel/gestionForm', [ConsommationMaterielController::class, 'gestionForm'])->name('consommationMateriels.gestionForm');
+Route::get('consommationMateriel/destroyConsommationMateriel/{consommationMateriel}', [ConsommationMaterielController::class, 'destroyConsommationMateriel'])->name('consommationMateriels.destroyConsommationMateriel');
 
 Route::resource ('decomptes' , DecompteController::class);
-Route::get('decompte/search', [DecompteController::class, 'search'])->name('decomptes.search');
+Route::get('decompte/gotoIndex', [DecompteController::class, 'gotoIndex'])->name('decomptes.gotoIndex');
+Route::get('decompte/gestionForm', [DecompteController::class, 'gestionForm'])->name('decomptes.gestionForm');
+Route::get('decompte/destroyDecompte/{decompte}', [DecompteController::class, 'destroyDecompte'])->name('decomptes.destroyDecompte');
 
 Route::resource ('frais' , FraisController::class);
-Route::get('frai/search', [FraisController::class, 'search'])->name('frais.search');
+Route::get('frai/gotoIndex', [FraisController::class, 'gotoIndex'])->name('frais.gotoIndex');
+Route::get('frai/gestionForm', [FraisController::class, 'gestionForm'])->name('frais.gestionForm');
+Route::get('frai/destroyFrais/{frai}', [FraisController::class, 'destroyFrais'])->name('frais.destroyFrais');
 
 Route::resource ('natureFrais' , NatureFraisController::class);
-Route::get('nature/search', [NatureFraisController::class, 'search'])->name('natureFrais.search');
+Route::get('natureFrai/gotoIndex', [NatureFraisController::class, 'gotoIndex'])->name('natureFrais.gotoIndex');
+Route::get('natureFrai/gestionForm', [NatureFraisController::class, 'gestionForm'])->name('natureFrais.gestionForm');
+Route::get('natureFrai/destroyNatureFrais/{natureFrai}', [NatureFraisController::class, 'destroyNatureFrais'])->name('natureFrais.destroyNatureFrais');
 
 Route::resource ('ordreServices' , OrdreServiceController::class);
-Route::get('ordreService/search', [OrdreServiceController::class, 'search'])->name('ordreServices.search');
+Route::get('ordreService/gotoIndex', [OrdreServiceController::class, 'gotoIndex'])->name('ordreServices.gotoIndex');
+Route::get('ordreService/gestionForm', [OrdreServiceController::class, 'gestionForm'])->name('ordreServices.gestionForm');
+Route::get('ordreService/destroyOrdreService/{ordreService}', [OrdreServiceController::class, 'destroyOrdreService'])->name('ordreServices.destroyOrdreService');
 
 Route::resource ('soutraitances' , SouTraitanceController::class);
-Route::get('soutraitance/search', [SouTraitanceController::class, 'search'])->name('soutraitances.search');
+Route::get('soutraitance/gotoIndex', [SouTraitanceController::class, 'gotoIndex'])->name('soutraitances.gotoIndex');
+Route::get('soutraitance/gestionForm', [SouTraitanceController::class, 'gestionForm'])->name('soutraitances.gestionForm');
+Route::get('soutraitance/destroySoutraitance/{soutraitance}', [SouTraitanceController::class, 'destroySoutraitance'])->name('soutraitances.destroySoutraitance');
+
 
 Route::resource ('commandes' , CommandeController::class);
-Route::get('commande/search', [CommandeController::class, 'search'])->name('commandes.search');
+Route::get('commande/gotoIndex', [CommandeController::class, 'gotoIndex'])->name('commandes.gotoIndex');
+Route::get('commande/gestionForm', [CommandeController::class, 'gestionForm'])->name('commandes.gestionForm');
+Route::get('commande/destroyCommande/{commande}', [CommandeController::class, 'destroyCommande'])->name('commandes.destroyCommande');
 
 Route::resource ('materiaus' , MateriauController::class);
-Route::get('materiau/search', [MateriauController::class, 'search'])->name('materiaus.search');
+Route::get('materiau/gotoIndex', [MateriauController::class, 'gotoIndex'])->name('materiaus.gotoIndex');
+Route::get('materiau/gestionForm', [MateriauController::class, 'gestionForm'])->name('materiaus.gestionForm');
+Route::get('materiau/destroyMateriau/{materiau}', [MateriauController::class, 'destroyMateriau'])->name('materiaus.destroyMateriau');
 
 Route::resource ('factures' , FactureController::class);
-Route::get('facture/search', [FactureController::class, 'search'])->name('factures.search');
+Route::get('facture/gotoIndex', [FactureController::class, 'gotoIndex'])->name('factures.gotoIndex');
+Route::get('facture/gestionForm', [FactureController::class, 'gestionForm'])->name('factures.gestionForm');
+Route::get('facture/destroyFacture/{facture}', [FactureController::class, 'destroyFacture'])->name('factures.destroyFacture');
 
 Route::resource ('acomptes' , AcompteController::class);
-Route::get('acompte/search', [AcompteController::class, 'search'])->name('acomptes.search');
+Route::get('acompte/gotoIndex', [AcompteController::class, 'gotoIndex'])->name('acomptes.gotoIndex');
+Route::get('acompte/gestionForm', [AcompteController::class, 'gestionForm'])->name('acomptes.gestionForm');
+Route::get('acompte/destroyAcompte/{acompte}', [AcompteController::class, 'destroyAcompte'])->name('acomptes.destroyAcompte');
+
 
 Route::resource ('avenants' , AvenantController::class);
-Route::get('avenant/search', [AvenantController::class, 'search'])->name('avenants.search');
+Route::get('avenant/gotoIndex', [AvenantController::class, 'gotoIndex'])->name('avenants.gotoIndex');
+Route::get('avenant/gestionForm', [AvenantController::class, 'gestionForm'])->name('avenants.gestionForm');
+Route::get('avenant/destroyAvenant/{avenant}', [AvenantController::class, 'destroyAvenant'])->name('avenants.destroyAvenant');
 
 Route::resource ('operations' , OperationController::class);
-Route::get('operation/search', [OperationController::class, 'search'])->name('operations.search');
+Route::get('operation/gotoIndex', [OperationController::class, 'gotoIndex'])->name('operations.gotoIndex');
+Route::get('operation/gestionForm', [OperationController::class, 'gestionForm'])->name('operations.gestionForm');
+Route::get('operation/destroyOperation/{operation}', [OperationController::class, 'destroyOperation'])->name('operations.destroyOperation');
 Route::get('operation/searchOperationEtat', [OperationController::class, 'searchOperationEtat'])->name('operations.searchOperationEtat');
 
 Route::resource ('qualifications' , QualificationController::class);
-Route::get('qualification/search', [QualificationController::class, 'search'])->name('qualifications.search');
+Route::get('qualification/gotoIndex', [QualificationController::class, 'gotoIndex'])->name('qualifications.gotoIndex');
+Route::get('qualification/gestionForm', [QualificationController::class, 'gestionForm'])->name('qualifications.gestionForm');
+Route::get('qualification/destroyQualification/{qualification}', [QualificationController::class, 'destroyQualification'])->name('qualifications.destroyQualification');
 
 Route::resource ('chantierNatureFrais' , ChantierNatureFraisController::class);
 Route::get('chantierNatureFrai/search', [ChantierNatureFraisController::class, 'search'])->name('chantierNatureFrais.search');
+Route::get('chantierNatureFrai/gotoIndex', [ChantierNatureFraisController::class, 'gotoIndex'])->name('chantierNatureFrais.gotoIndex');
+Route::get('chantierNatureFrai/gestionForm', [ChantierNatureFraisController::class, 'gestionForm'])->name('chantierNatureFrais.gestionForm');
+Route::get('chantierNatureFrai/destroychantierNatureFrais/{chantier}', [ChantierNatureFraisController::class, 'destroychantierNatureFrais'])->name('chantierNatureFrais.destroychantierNatureFrais');
 
 Route::resource ('chantierQualifications' , ChantierQualificationController::class);
 Route::get('chantierQualification/search', [ChantierQualificationController::class, 'search'])->name('chantierQualifications.search');
-
+Route::get('chantierQualification/gotoIndex', [ChantierQualificationController::class, 'gotoIndex'])->name('chantierQualifications.gotoIndex');
+Route::get('chantierQualification/gestionForm', [ChantierQualificationController::class, 'gestionForm'])->name('chantierQualifications.gestionForm');
+Route::get('chantierQualification/destroyChantierQualification/{chantier}', [ChantierQualificationController::class, 'destroyChantierQualification'])->name('chantierQualifications.destroyChantierQualification');
 
 
 
 
 Route::resource ('fournisseurs' , FournisseurController::class);
-Route::get('fournisseur/search', [FournisseurController::class, 'search'])->name('fournisseurs.search');
+Route::get('fournisseur/gotoIndex', [FournisseurController::class, 'gotoIndex'])->name('fournisseurs.gotoIndex');
+Route::get('fournisseur/gestionForm', [FournisseurController::class, 'gestionForm'])->name('fournisseurs.gestionForm');
+Route::get('fournisseur/destroyFournisseur/{fournisseur}', [FournisseurController::class, 'destroyFournisseur'])->name('fournisseurs.destroyFournisseur');
 
 
 
 Route::resource ('chantiers' , ChantierController::class);
-Route::get('chantier/search', [ChantierController::class, 'search'])->name('chantiers.search');
+Route::get('chantier/gotoIndex', [ChantierController::class, 'gotoIndex'])->name('chantiers.gotoIndex');
+Route::get('chantier/gestionForm', [ChantierController::class, 'gestionForm'])->name('chantiers.gestionForm');
+Route::get('chantier/destroyChantier/{chantier}', [ChantierController::class, 'destroyChantier'])->name('chantiers.destroyChantier');
 Route::get('chantier/searchChantierPersonnels', [ChantierController::class, 'searchChantierPersonnels'])->name('chantiers.searchChantierPersonnels');
 Route::get('chantierPersonnels/searchChantierPersonnels', [ChantierPersonnelController::class, 'searchChantierPersonnels'])->name('chantierPersonnels.searchChantierPersonnels');
 Route::get('chantierPersonnels/searchPersonnelsByChantier', [ChantierPersonnelController::class, 'searchPersonnelsByChantier'])->name('chantierPersonnels.searchPersonnelsByChantier');
@@ -121,29 +162,39 @@ Route::get('searchMateriauxByChantier', [ChantierController::class, 'searchMater
 
 Route::resource ('chantierMateriels' , ChantierMaterielController::class);
 Route::get('chantierMateriel/search', [ChantierMaterielController::class, 'search'])->name('chantierMateriels.search');
+Route::get('chantierMateriel/gotoIndex', [ChantierMaterielController::class, 'gotoIndex'])->name('chantierMateriels.gotoIndex');
+Route::get('chantierMateriel/gestionForm', [ChantierMaterielController::class, 'gestionForm'])->name('chantierMateriels.gestionForm');
+
 
 Route::resource ('chantierOperations' , ChantierOperationController::class);
 Route::get('chantierOperation/search', [ChantierOperationController::class, 'search'])->name('chantierOperations.search');
 Route::get('/searchOperationsByChantier', [ChantierOperationController::class, 'searchOperationsByChantier'])->name('chantierOperations.searchOperationsByChantier');
-
+Route::get('chantierOperation/gotoIndex', [ChantierOperationController::class, 'gotoIndex'])->name('chantierOperations.gotoIndex');
+Route::get('chantierOperation/gestionForm', [ChantierOperationController::class, 'gestionForm'])->name('chantierOperations.gestionForm');
 
 Route::resource ('chantierOperationReels' , ChantierOperationReelController::class);
 Route::get('chantierOperationReel/search', [ChantierOperationReelController::class, 'search'])->name('chantierOperationReels.search');
+Route::get('chantierOperationReel/gotoIndex', [ChantierOperationReelController::class, 'gotoIndex'])->name('chantierOperationReels.gotoIndex');
+Route::get('chantierOperationReel/gestionForm', [ChantierOperationReelController::class, 'gestionForm'])->name('chantierOperationReels.gestionForm');
 Route::get('getOperationsExecute/{id}', [ChantierOperationReelController::class, 'getOperationsExecute'])->name('getOperationsExecute');
 
 Route::get('chantierOperationReels/showOperations/{chantier}', [ChantierOperationReelController::class, 'showOperations'])->name('chantierOperationReels.showOperations');
 Route::get('chantierOperationReels/editOperations/{chantier}', [ChantierOperationReelController::class, 'editOperations'])->name('chantierOperationReels.editOperations');
 Route::get('chantierOperationReels/updateOperations/{chantier}', [ChantierOperationReelController::class, 'updateOperations'])->name('chantierOperationReels.updateOperations');
-Route::delete('chantierOperationReels/destroyChantierOperations/{chantier}', [ChantierOperationReelController::class, 'destroyChantierOperations'])->name('chantierOperationReels.destroyChantierOperations');
+Route::get('chantierOperationReels/destroyChantierOperations/{chantier}', [ChantierOperationReelController::class, 'destroyChantierOperations'])->name('chantierOperationReels.destroyChantierOperations');
 
 
 Route::resource ('chantierPersonnels' , ChantierPersonnelController::class);
 Route::get('chantierPersonnel/search', [ChantierPersonnelController::class, 'search'])->name('chantierPersonnels.search');
+Route::get('chantierPersonnel/gotoIndex', [ChantierPersonnelController::class, 'gotoIndex'])->name('chantierPersonnels.gotoIndex');
+Route::get('chantierPersonnel/gestionForm', [ChantierPersonnelController::class, 'gestionForm'])->name('chantierPersonnels.gestionForm');
+
 
 
 Route::resource ('commandeMateriaus' , CommandeMateriauController::class);
-Route::get('commandeMateriau/search', [CommandeMateriauController::class, 'search'])->name('commandeMateriaus.search');
 Route::get('commandeMateriau/searchMateriauxByCommande', [CommandeMateriauController::class, 'searchMateriauxByCommande'])->name('commandeMateriaus.searchMateriauxByCommande');
+Route::get('commandeMateriau/gotoIndex', [CommandeMateriauController::class, 'gotoIndex'])->name('commandeMateriaus.gotoIndex');
+Route::get('commandeMateriau/gestionForm', [CommandeMateriauController::class, 'gestionForm'])->name('commandeMateriaus.gestionForm');
 
 
 //Route::get('/chantiersbymateriel/{id}', [ChantierController::class, 'getAllChantierByMateriel'])->name('chantiers.getAllChantierByMateriel');
@@ -170,33 +221,33 @@ Route::get('/getFrais/{id}', [FraisController::class, 'getFrais'])->name('frais.
 Route::get('commandeMateriaus/showMateriaux/{commande}', [CommandeMateriauController::class, 'showMateriaux'])->name('commandeMateriaus.showMateriaux');
 Route::get('commandeMateriaus/editMateriaux/{commande}', [CommandeMateriauController::class, 'editMateriaux'])->name('commandeMateriaus.editMateriaux');
 Route::get('commandeMateriaus/updateMateriaux/{commande}', [CommandeMateriauController::class, 'updateMateriaux'])->name('commandeMateriaus.updateMateriaux');
-Route::delete('commandeMateriaus/destroyCommandeMateriaux/{commande}', [CommandeMateriauController::class, 'destroyCommandeMateriaux'])->name('commandeMateriaus.destroyCommandeMateriaux');
+Route::get('commandeMateriaus/destroyCommandeMateriaux/{commande}', [CommandeMateriauController::class, 'destroyCommandeMateriaux'])->name('commandeMateriaus.destroyCommandeMateriaux');
 
 
 Route::get('chantierOperations/showOperations/{chantier}', [ChantierOperationController::class, 'showOperations'])->name('chantierOperations.showOperations');
 Route::get('chantierOperations/editOperations/{chantier}', [ChantierOperationController::class, 'editOperations'])->name('chantierOperations.editOperations');
 Route::get('chantierOperations/updateOperations/{chantier}', [ChantierOperationController::class, 'updateOperations'])->name('chantierOperations.updateOperations');
-Route::delete('chantierOperations/destroyChantierOperations/{chantier}', [ChantierOperationController::class, 'destroyChantierOperations'])->name('chantierOperations.destroyChantierOperations');
+Route::get('chantierOperations/destroyChantierOperations/{chantier}', [ChantierOperationController::class, 'destroyChantierOperations'])->name('chantierOperations.destroyChantierOperations');
 
 Route::get('chantierMateriels/showMateriels/{chantier}', [ChantierMaterielController::class, 'showMateriels'])->name('chantierMateriels.showMateriels');
 Route::get('chantierMateriels/editMateriels/{chantier}', [ChantierMaterielController::class, 'editMateriels'])->name('chantierMateriels.editMateriels');
 Route::get('chantierMateriels/updateMateriels/{chantier}', [ChantierMaterielController::class, 'updateMateriels'])->name('chantierMateriels.updateMateriels');
-Route::delete('chantierMateriels/destroyChantierMateriels/{chantier}', [ChantierMaterielController::class, 'destroyChantierMateriels'])->name('chantierMateriels.destroyChantierMateriels');
+Route::get('chantierMateriels/destroyChantierMateriels/{chantier}', [ChantierMaterielController::class, 'destroyChantierMateriels'])->name('chantierMateriels.destroyChantierMateriels');
 
 Route::get('chantierPersonnels/showPersonnels/{chantier}', [ChantierPersonnelController::class, 'showPersonnels'])->name('chantierPersonnels.showPersonnels');
 Route::get('chantierPersonnels/editPersonnels/{chantier}', [ChantierPersonnelController::class, 'editPersonnels'])->name('chantierPersonnels.editPersonnels');
 Route::get('chantierPersonnels/updatePersonnels/{chantier}', [ChantierPersonnelController::class, 'updatePersonnels'])->name('chantierPersonnels.updatePersonnels');
-Route::delete('chantierPersonnels/destroyChantierPersonnels/{chantier}', [ChantierPersonnelController::class, 'destroyChantierPersonnels'])->name('chantierPersonnels.destroyChantierPersonnels');
+Route::get('chantierPersonnels/destroyChantierPersonnels/{chantier}', [ChantierPersonnelController::class, 'destroyChantierPersonnels'])->name('chantierPersonnels.destroyChantierPersonnels');
 
 Route::get('chantierQualifications/showQualifications/{chantier}', [ChantierQualificationController::class, 'showQualifications'])->name('chantierQualifications.showQualifications');
 Route::get('chantierQualifications/editQualifications/{chantier}', [ChantierQualificationController::class, 'editQualifications'])->name('chantierQualifications.editQualifications');
 Route::get('chantierQualifications/updateQualifications/{chantier}', [ChantierQualificationController::class, 'updateQualifications'])->name('chantierQualifications.updateQualifications');
-Route::delete('chantierQualifications/destroyChantierQualifications/{chantier}', [ChantierQualificationController::class, 'destroyChantierQualifications'])->name('chantierQualifications.destroyChantierQualifications');
+Route::get('chantierQualifications/destroyChantierQualifications/{chantier}', [ChantierQualificationController::class, 'destroyChantierQualifications'])->name('chantierQualifications.destroyChantierQualifications');
 
 Route::get('chantierNatureFrais/showNatureFrais/{chantier}', [ChantierNatureFraisController::class, 'showNatureFrais'])->name('chantierNatureFrais.showNatureFrais');
 Route::get('chantierQualifications/editNatureFrais/{chantier}', [ChantierNatureFraisController::class, 'editNatureFrais'])->name('chantierNatureFrais.editNatureFrais');
 Route::get('chantierNatureFrais/updateNatureFrais/{chantier}', [ChantierNatureFraisController::class, 'updateNatureFrais'])->name('chantierNatureFrais.updateNatureFrais');
-Route::delete('chantierNatureFrais/destroyChantierNatureFrais/{chantier}', [ChantierNatureFraisController::class, 'destroyChantierNatureFrais'])->name('chantierNatureFrais.destroyChantierNatureFrais');
+Route::get('chantierNatureFrais/destroyChantierNatureFrais/{chantier}', [ChantierNatureFraisController::class, 'destroyChantierNatureFrais'])->name('chantierNatureFrais.destroyChantierNatureFrais');
 
 
 

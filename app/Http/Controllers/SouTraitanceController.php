@@ -121,7 +121,7 @@ class SouTraitanceController extends Controller
         Sou_traitance::where('id', '=',$soutraitance->id)->update($request->except(['_token','_method']));
 
 
-         return redirect()->route('soutraitances.show', [$soutraitance])
+         return redirect()->route('soutraitances.gestionForm')
          ->with('success','Modification avec succès');
     }
 
@@ -131,41 +131,72 @@ class SouTraitanceController extends Controller
      * @param  \App\Models\Sou_traitance  $soutraitance
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Sou_traitance $soutraitance)
+    public function destroySoutraitance(Sou_traitance $soutraitance)
     {
         try {
+          //  dd($soutraitance->id);
+
             $soutraitance->delete();
-            return redirect()->route('soutraitances.index')
-                     ->with('success','Sous traitance supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('soutraitances.gestionForm')
+                        ->with('success','Sou_traitance supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('soutraitances.index')
+            return redirect()->route('soutraitances.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          }
+          }    
+        
     }
 
-    public function search(){
-        $search_c = $_GET['code_soutraitance'];
-        $search_i = $_GET['intitule_soutraitance'];
 
-        if ($search_i == null){
-            $search_i = '#';
-        }
-        if ($search_c == null){
-            $search_c = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('soutraitances.create');
         }
 
-        $soutraitances = Sou_traitance::query()
-        ->where('code_soutraitance', 'like', "%".$search_c."%")
-        ->orWhere('intitule_soutraitance', 'like', "%".$search_i."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
+        if (isset($_GET['modifier'])) {
+            $soutraitances = Sou_traitance::all();
+            // dd ($soutraitances);
+            return view('soutraitances.gestion', compact('soutraitances'));
+            }
+            else{
+                $soutraitances = Sou_traitance::all();
+                return view('soutraitances.gestion', compact('soutraitances'));
+            }
 
-        if ($soutraitances->isEmpty()) {
-            return redirect()->route('soutraitances.index')
-                        ->with('warning',"N'éxiste aucun sous traitance avec les informations de la recherche");
-        }
         
-        return view('soutraitances.search', compact('soutraitances'));
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['soutraitance_id'])) {
+            $id = $_GET['soutraitance_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $soutraitance = Sou_traitance::find($id);
+             // dd($soutraitance);
+                return redirect()->route('soutraitances.destroySoutraitance', $soutraitance);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('soutraitances.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('soutraitances.show',$id);
+                    }
+          } else {
+            $soutraitances = Sou_traitance::all();
+            // dd ($soutraitances);
+            return view('soutraitances.gestion', compact('soutraitances'))
+                    ->with('error','Pouvez vous choisir un soutraitance!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 }

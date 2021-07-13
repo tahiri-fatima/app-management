@@ -4,24 +4,28 @@
 
 <div class="col d-flex justify-content-center">
 
-<div class="container">
+<div class="container" >
 		<div class="card">
 			<div class="card-body">
 				
 				<div >
-					<h5 class="card-title"><i class="fa fa-fw fa-search"></i> Chercher décompte</h5>
+					<h5 class="card-title" > Gestion des decomptes</h5>
 
-                        <form class="form-material" type="get" action="{{ route('decomptes.search') }}" >
-                        <div class="row justify-content-center" >
-                                <div class="col-6">
-                                    <div class="form-group" style="margin-right: 15px;" >
-                                        <input class="form-control mr-ms-2" name="num_decompte"  type="search" placeholder="Numéro de décompte" >
+                        <form class="form-material" type="get" action="{{ route('decomptes.gestionForm') }}" style="margin-top: 25px;" >
+                            <div class="row justify-content-around">
+                                <div class="col" >
+                                    <div class="form-group" >
+                                    <button class="btn btn-primary"  type="submit" value="Ajouter" name="ajouter"  ><i class="fa fa-fw fa-plus-circle"></i> Ajouter nouveau décompte</button>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="form-group " style="margin-right: 15px;" >
-                                        <button class="btn btn-primary" type="submit" value="search" style="margin-right: 15px;" ><i class="fa fa-fw fa-search"></i> Chercher</button>
-                                        <button type="reset" class="btn btn-info" > <i class="fa fa-fw fa-sync"></i> Réinitialiser</button>
+                                <div class="col">
+                                        <div class="form-group " >
+                                            <button class="btn btn-primary" type="submit" value="Modifier" name="modifier" > Modifier/Supprimer</button>
+                                        </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                    <a class="btn btn-primary text-right" href="home" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
                                     </div>
                                 </div>
                             </div>
@@ -31,58 +35,9 @@
         </div>
        </div>
 </div>
-       <div class="form-material">
-		<div class="container" style="margin-top: 20px;margin-bottom: 20px;">
-			
-        <div style="margin-left: 50%;"> 
-            <a class="btn btn-primary text-right" href="{{ route('decomptes.create') }}"><i class="fa fa-fw fa-plus-circle"></i> Ajouter nouveau décompte</a> 
-            <a class="btn btn-primary text-right" href="home" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
-        </div> 
-
-		</div> <!--/.container-->
-        <div class="col d-flex justify-content-center " > 
-            @if ($message = Session::get('success'))
-            <div class="alert alert-success message">
-                <p>{{ $message }}</p>
-            </div>
-            @endif
-
-            @if ($message = Session::get('warning'))
-            <div class="alert alert-info message">
-                <p>{{ $message }}</p>
-            </div>
-            @endif
-
-            @if ($message = Session::get('error'))
-            <div class="alert alert-danger message">
-                <p>{{ $message }}</p>
-            </div>
-            @endif
-        </div>
-
-        <h5 style="margin-left: 25px; margin-bottom: 15px;" >Gestion des décomptes</h5>
-
-        <div class="col  justify-content-center">
-       
-
-        <div class="row " style="margin-left: 30px;" >
-            <div class="col-6">
-                <div class="form-group form-primary form-static-label">
-                    <select class="form-control" id="decomptes" type="dropdown-toggle" class="form-control" name="decomptes" onchange="top.location.href = this.options[this.selectedIndex].value" >
-                        <option value="choisir" selected disabled>Choisir Décompte</option>
-                        @foreach($decomptes as $decompte)
-                            <option class="decomptes" value="{{  route('decomptes.show',$decompte->id) }}">{{$decompte->num_decompte}}</option>
-                        @endforeach
-                    </select>
-                </div>                
-                <span class="form-bar"></span>
-                     
-            </div>
-        </div>
 
 
-</div>
-	
+
 
       
 @endsection

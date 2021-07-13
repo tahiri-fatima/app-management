@@ -116,7 +116,7 @@ class QualificationController extends Controller
         }
 
         Qualification::where('id', '=',$qualification->id)->update($request->except(['_token','_method']));
-        return redirect()->route('qualifications.show', [$qualification])
+        return redirect()->route('qualifications.gestionForm')
         ->with('success','Modification avec succès');
     }
 
@@ -126,42 +126,73 @@ class QualificationController extends Controller
      * @param  \App\Models\Qualification  $qualification
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Qualification $qualification)
+    public function destroyQualification(Qualification $qualification)
     {
         try {
+          //  dd($qualification->id);
+
             $qualification->delete();
-            return redirect()->route('qualifications.index')
+           // dd($a);
+            return redirect()->route('qualifications.gestionForm')
                         ->with('success','Qualification supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('qualifications.index')
+            return redirect()->route('qualifications.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          }
+          }    
+        
     }
 
-    public function search(){
-        $search_c = $_GET['code_qual'];
-        $search_i = $_GET['designation_qual'];
 
-        if ($search_c == null){
-            $search_c = '#';
-        }
-        if ($search_i == null){
-            $search_i = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('qualifications.create');
         }
 
-        $qualifications = Qualification::query()
-        ->where('code_qual', 'like', "%".$search_c."%")
-        ->orWhere('designation_qual', 'like', "%".$search_i."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
+        if (isset($_GET['modifier'])) {
+            $qualifications = qualification::all();
+            // dd ($qualifications);
+            return view('qualifications.gestion', compact('qualifications'));
+            }
+            else{
+                $qualifications = qualification::all();
+                return view('qualifications.gestion', compact('qualifications'));
+            }
 
-        if ($qualifications->isEmpty()) {
-            return redirect()->route('qualifications.index')
-                        ->with('warning',"N'éxiste aucun qualification avec les informations de la recherche");
-        }
         
-        return view('qualifications.search', compact('qualifications'));
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['qualification_id'])) {
+            $id = $_GET['qualification_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $qualification = Qualification::find($id);
+             // dd($qualification);
+                return redirect()->route('qualifications.destroyQualification', $qualification);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('qualifications.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('qualifications.show',$id);
+                    }
+          } else {
+            $qualifications = qualification::all();
+            // dd ($qualifications);
+            return view('qualifications.gestion', compact('qualifications'))
+                    ->with('error','Pouvez vous choisir un qualification!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
 }

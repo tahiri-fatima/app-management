@@ -154,7 +154,7 @@ class DecompteController extends Controller
         $request->merge(['retunue_garantie' => $retunue_garantie]);
 
         Decompte::where('id', '=',$decompte->id)->update($request->except(['_token','_method']));
-        return redirect()->route('decomptes.show', [$decompte])
+        return redirect()->route('decomptes.gestionForm')
                         ->with('success','Modification avec succès');
     }
 
@@ -164,35 +164,73 @@ class DecompteController extends Controller
      * @param  \App\Models\Decompte  $decompte
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Decompte $decompte)
+    public function destroyDecompte(decompte $decompte)
     {
-
         try {
+          //  dd($decompte->id);
+
             $decompte->delete();
-            return redirect()->route('decomptes.index')
-                            ->with('success','Décompte supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('decomptes.gestionForm')
+                        ->with('success','Décompte supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('decomptes.index')
+            return redirect()->route('decomptes.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          } 
+          }    
         
     }
 
-    public function search(){
-        $search_c = $_GET['num_decompte'];
 
-        $decomptes = Decompte::query()
-        ->where('num_decompte', 'like', "%".$search_c."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        if ($decomptes->isEmpty()) {
-            return redirect()->route('decomptes.index')
-                        ->with('warning',"N'éxiste aucun compte avec les informations de la recherche");
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('decomptes.create');
         }
+
+        if (isset($_GET['modifier'])) {
+            $decomptes = decompte::all();
+            // dd ($decomptes);
+            return view('decomptes.gestion', compact('decomptes'));
+            }
+            else{
+                $decomptes = decompte::all();
+                return view('decomptes.gestion', compact('decomptes'));
+            }
+
         
-        return view('decomptes.search', compact('decomptes'));
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['decompte_id'])) {
+            $id = $_GET['decompte_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $decompte = decompte::find($id);
+             // dd($decompte);
+                return redirect()->route('decomptes.destroyDecompte', $decompte);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('decomptes.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('decomptes.show',$id);
+                    }
+          } else {
+            $decomptes = decompte::all();
+            // dd ($decomptes);
+            return view('decomptes.gestion', compact('decomptes'))
+                    ->with('error','Pouvez vous choisir un décompte!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
 }

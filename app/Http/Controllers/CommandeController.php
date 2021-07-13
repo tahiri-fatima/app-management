@@ -154,7 +154,7 @@ class CommandeController extends Controller
         }
 
         Commande::where('id', '=',$commande->id)->update($request->except(['_token','_method', 'materiaus']));
-        return redirect()->route('commandes.show', [$commande])
+        return redirect()->route('commandes.gestionForm')
         ->with('success','Modification avec succès');
     
     }
@@ -165,40 +165,73 @@ class CommandeController extends Controller
      * @param  \App\Models\Commande  $commande
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Commande $commande)
+    public function destroyCommande(Commande $commande)
     {
         try {
+          //  dd($commande->id);
+
             $commande->delete();
-            return redirect()->route('commandes.index')
-                            ->with('success','Commande supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('commandes.gestionForm')
+                        ->with('success','Commande supprimé avec succes.');
         
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('commandes.index')
+            return redirect()->route('commandes.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          } 
-
-       
+          }    
+        
     }
 
-    public function search(){
-        $search_c = $_GET['code_commande'];
 
-        if ($search_c == null){
-            $search_c = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('commandes.create');
         }
 
-        $commande = Commande::query()
-        ->where('code_commande', 'like', "%".$search_c."%")
-        ->orderBy('created_at', 'desc')
-        ->first();
+        if (isset($_GET['modifier'])) {
+            $commandes = commande::all();
+            // dd ($commandes);
+            return view('commandes.gestion', compact('commandes'));
+            }
+            else{
+                $commandes = commande::all();
+                return view('commandes.gestion', compact('commandes'));
+            }
 
-        if ($commande === null) {
-            return redirect()->route('commandes.index')
-                        ->with('warning',"N'éxiste aucune commande avec les informations de la recherche");
-        }
         
-        return redirect()->route('commandes.show', $commande->id);
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['commande_id'])) {
+            $id = $_GET['commande_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $commande = Commande::find($id);
+             // dd($commande);
+                return redirect()->route('commandes.destroyCommande', $commande);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('commandes.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('commandes.show',$id);
+                    }
+          } else {
+            $commandes = commande::all();
+            // dd ($commandes);
+            return view('commandes.gestion', compact('commandes'))
+                    ->with('error','Pouvez vous choisir un commande!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 
     public function getMateriaux($id){

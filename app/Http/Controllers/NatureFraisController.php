@@ -112,7 +112,7 @@ class NatureFraisController extends Controller
         }
 
         NatureFrais::where('id', '=',$natureFrai->id)->update($request->except(['_token','_method']));
-        return redirect()->route('natureFrais.show', [$natureFrai])
+        return redirect()->route('natureFrais.gestionForm')
         ->with('success','Modification avec succès');
     }
 
@@ -122,33 +122,72 @@ class NatureFraisController extends Controller
      * @param  \App\Models\NatureFrais  $natureFrais
      * @return \Illuminate\Http\Response
      */
-    public function destroy(NatureFrais $natureFrai)
+    public function destroyNatureFrais(NatureFrais $natureFrai)
     {
         try {
+          //  dd($natureFrai->id);
+
             $natureFrai->delete();
-            return redirect()->route('natureFrais.index')
-                        ->with('success','nature de frais supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('natureFrais.gestionForm')
+                        ->with('success','NatureFrais supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('natureFrais.index')
+            return redirect()->route('natureFrais.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          }
+          }    
+        
     }
 
-    public function search(){
-        $search_c = $_GET['code_nature_frais'];
 
-        $natureFrais = NatureFrais::query()
-        ->where('code_nature_frais', 'like', "%".$search_c."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        if ($natureFrais->isEmpty()) {
-            return redirect()->back()
-                        
-                        ->with('warning',"N'éxiste aucune nature de frais avec les informations de la recherche");
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('natureFrais.create');
         }
+
+        if (isset($_GET['modifier'])) {
+            $natureFrais = NatureFrais::all();
+            // dd ($natureFrais);
+            return view('natureFrais.gestion', compact('natureFrais'));
+            }
+            else{
+                $natureFrais = NatureFrais::all();
+                return view('natureFrais.gestion', compact('natureFrais'));
+            }
+
         
-        return view('natureFrais.search', compact('natureFrais'));
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['natureFrai_id'])) {
+            $id = $_GET['natureFrai_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $natureFrai = NatureFrais::find($id);
+             // dd($natureFrai);
+                return redirect()->route('natureFrais.destroyNatureFrais', $natureFrai);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('natureFrais.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('natureFrais.show',$id);
+                    }
+          } else {
+            $natureFrais = NatureFrais::all();
+            // dd ($natureFrais);
+            return view('natureFrais.gestion', compact('natureFrais'))
+                    ->with('error','Pouvez vous choisir un natureFrai!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 }

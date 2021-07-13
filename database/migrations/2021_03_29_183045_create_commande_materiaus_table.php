@@ -20,7 +20,7 @@ class CreateCommandeMateriausTable extends Migration
             $table->id();
             $table->unsignedBigInteger('materiau_id');
             $table->unsignedBigInteger('commande_id');
-            $table->double('quantite_materiau');
+            $table->integer('quantite_materiau');
             $table->double('montant_materiau');
             $table->timestamps();
             

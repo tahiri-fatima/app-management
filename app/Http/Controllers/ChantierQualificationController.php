@@ -232,7 +232,7 @@ class ChantierQualificationController extends Controller
                   }
             }   
         }
-      return redirect()->route('chantierQualifications.showQualifications', [$chantier])
+      return redirect()->route('chantierQualifications.gestionForm')
       ->with('success','Modification avec succès');
     }
 
@@ -249,7 +249,7 @@ class ChantierQualificationController extends Controller
             $chantierQualification->delete();
         }
         
-        return redirect()->route('chantierQualifications.index')
+        return redirect()->route('chantierQualifications.gestionForm')
                         ->with('success','Les qualifications du chantier sont supprimé avec succes.');
   
     }
@@ -278,4 +278,62 @@ class ChantierQualificationController extends Controller
          return redirect()->route('chantierQualifications.showQualifications',$chantier->id);
 
     }
+
+
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+           
+            return redirect()->route('chantierQualifications.create');
+
+        }
+
+        if (isset($_GET['modifier'])) {
+
+            $chantiers = Chantier::all();
+            // dd ($chantiers);
+            return view('chantierQualifications.gestion', compact('chantiers'));
+            }
+            else{
+                $chantiers = Chantier::all();
+
+                return view('chantierQualifications.gestion', compact('chantiers'));
+
+            }
+
+        
+    }
+
+    public function gotoIndex(){
+        if (isset($_GET['chantier_id'])) {
+            $id = $_GET['chantier_id'];
+            $chantier = Chantier::find($id);
+    
+            if (isset($_GET['supprimer'])) {
+               
+                return redirect()->route('chantierQualifications.destroyChantierQualifications', $id);
+    
+            }
+    
+            if (isset($_GET['modifier2'])) {
+    
+               
+                return redirect()->route('chantierQualifications.editQualifications', $chantier->id);
+    
+                }
+    
+                if (isset($_GET['consulter'])) {
+    
+                    return redirect()->route('chantierQualifications.showQualifications',$chantier->id);
+        
+                    }
+          } else {
+              $chantiers = Chantier::all();
+            return view('chantierQualifications.gestion', compact('chantiers'))
+                    ->with('error','Pouvez vous choisir une chantier!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
+    }
+    
 }

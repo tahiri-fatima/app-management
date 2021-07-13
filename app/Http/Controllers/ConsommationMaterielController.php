@@ -128,7 +128,7 @@ class ConsommationMaterielController extends Controller
         }
 
         ConsommationMateriel::where('id', '=',$consommationMateriel->id)->update($request->except(['_token','_method']));
-        return redirect()->route('consommationMateriels.show', [$consommationMateriel])
+        return redirect()->route('consommationMateriels.gestionForm')
         ->with('success','Modification avec succès');
 
     }
@@ -139,30 +139,72 @@ class ConsommationMaterielController extends Controller
      * @param  \App\Models\ConsommationMateriel  $consommationMateriel
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ConsommationMateriel $consommationMateriel)
+    public function destroyConsommationMateriel(ConsommationMateriel $consommationMateriel)
     {
-        $consommationMateriel->delete();
-        return redirect()->route('consommationMateriels.index')
-                        ->with('success','Consommation du materiel a supprimé avec succes.');
+        try {
+          //  dd($consommationMateriel->id);
+
+            $consommationMateriel->delete();
+           // dd($a);
+            return redirect()->route('consommationMateriels.gestionForm')
+                        ->with('success','Consommation Matériel supprimé avec succes.');
+        
+          } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('consommationMateriels.gestionForm')
+                    ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
+             // var_dump($e->errorInfo);
+          }    
+        
     }
 
-    public function search(){
-        $search_c = $_GET['code_consommation_mat'];
 
-        $consommationMateriels = ConsommationMateriel::query()
-        ->where('code_consommation_mat', 'like', "%".$search_c."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-        if ($consommationMateriels->isEmpty()) {
-            return redirect()->back()
-                        ->with('error_code',0);
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('consommationMateriels.create');
         }
-        else{
-            return view('consommationMateriels.search', compact('consommationMateriels'));
 
-        }
+        if (isset($_GET['modifier'])) {
+            $consommationMateriels = consommationMateriel::all();
+            // dd ($consommationMateriels);
+            return view('consommationMateriels.gestion', compact('consommationMateriels'));
+            }
+            else{
+                $consommationMateriels = consommationMateriel::all();
+                return view('consommationMateriels.gestion', compact('consommationMateriels'));
+            }
+
         
+    }
 
+    public function gotoIndex(){
+        if(isset($_GET['consommationMateriel_id'])) {
+            $id = $_GET['consommationMateriel_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $consommationMateriel = ConsommationMateriel::find($id);
+             // dd($consommationMateriel);
+                return redirect()->route('consommationMateriels.destroyConsommationMateriel', $consommationMateriel);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('consommationMateriels.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('consommationMateriels.show',$id);
+                    }
+          } else {
+            $consommationMateriels = consommationMateriel::all();
+            // dd ($consommationMateriels);
+            return view('consommationMateriels.gestion', compact('consommationMateriels'))
+                    ->with('error','Pouvez vous choisir un consommationMateriel!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 }

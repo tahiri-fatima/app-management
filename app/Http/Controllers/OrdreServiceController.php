@@ -132,7 +132,7 @@ class OrdreServiceController extends Controller
         }
 
         OrdreService::where('id', '=',$ordreService->id)->update($request->except(['_token','_method']));
-        return redirect()->route('ordreServices.show', [$ordreService])
+        return redirect()->route('ordreServices.gestionForm')
         ->with('success','Modification avec succès');
        
     }
@@ -143,42 +143,72 @@ class OrdreServiceController extends Controller
      * @param  \App\Models\OrdreService  $ordreService
      * @return \Illuminate\Http\Response
      */
-    public function destroy(OrdreService $ordreService)
+    public function destroyOrdreService(OrdreService $ordreService)
     {
         try {
+          //  dd($ordreService->id);
+
             $ordreService->delete();
-            return redirect()->route('ordreServices.index')
-                            ->with('success','ordre de Service supprimé avec succes.');
+           // dd($a);
+            return redirect()->route('ordreServices.gestionForm')
+                        ->with('success','OrdreService supprimé avec succes.');
+        
           } catch (\Illuminate\Database\QueryException $e) {
-            return redirect()->route('ordreServices.index')
+            return redirect()->route('ordreServices.gestionForm')
                     ->with('error','Vous ne pouvez pas supprimé cet enregistrement.');
              // var_dump($e->errorInfo);
-          }
+          }    
         
     }
 
-    public function search(){
-        $search_c = $_GET['code_ordre_serv'];
-        $search_t = $_GET['type_ordre_serv'];
 
-        if ($search_t == null){
-            $search_t = '#';
-        }
-        if ($search_c == null){
-            $search_c = '#';
+    public function gestionForm(){
+        if (isset($_GET['ajouter'])) {
+          // dd($_GET['ajouter']);
+            return redirect()->route('ordreServices.create');
         }
 
-        $ordreServices = OrdreService::query()
-        ->where('code_ordre_serv', 'like', "%".$search_c."%")
-        ->orWhere('type_ordre_serv', 'like', "%".$search_t."%")
-        ->orderBy('created_at', 'desc')
-        ->get();
+        if (isset($_GET['modifier'])) {
+            $ordreServices = ordreService::all();
+            // dd ($ordreServices);
+            return view('ordreServices.gestion', compact('ordreServices'));
+            }
+            else{
+                $ordreServices = ordreService::all();
+                return view('ordreServices.gestion', compact('ordreServices'));
+            }
 
-        if ($ordreServices->isEmpty()) {
-            return redirect()->back()
-                        ->with('warning',"N'éxiste aucun ordre Service avec les informations de la recherche");
-        }
         
-        return view('ordreServices.search', compact('ordreServices'));
+    }
+
+    public function gotoIndex(){
+        if(isset($_GET['ordreService_id'])) {
+            $id = $_GET['ordreService_id'];
+    
+            if (isset($_GET['supprimer'])) {
+              // dd($_GET['supprimer']);
+             $ordreService = OrdreService::find($id);
+             // dd($ordreService);
+                return redirect()->route('ordreServices.destroyOrdreService', $ordreService);
+            }
+    
+            if (isset($_GET['modifier2'])) {
+                return redirect()->route('ordreServices.edit', $id);
+                }
+    
+                if (isset($_GET['consulter'])) {
+                  //  dd($_GET['consulter']);
+
+                    return redirect()->route('ordreServices.show',$id);
+                    }
+          } else {
+            $ordreServices = ordreService::all();
+            // dd ($ordreServices);
+            return view('ordreServices.gestion', compact('ordreServices'))
+                    ->with('error','Pouvez vous choisir un ordreService!');
+             // var_dump($e->errorInfo);
+          } 
+   
+  
     }
 }

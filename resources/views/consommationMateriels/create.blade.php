@@ -93,7 +93,7 @@
 <!-- start Formulaire -->
 
 <div class="col d-flex justify-content-center" > 
-    <div class="card" style="width:50%">  
+    <div class="card" style="width:70%">  
         <div class="card-header">
             <h5><i class="fa fa-fw fa-plus-circle"></i>  Ajouter nouvelle consommation</h5>
         </div>
@@ -102,43 +102,50 @@
 
             <form id="form" class="form-material" action="{{ route('consommationMateriels.store') }}" method="POST">
             @csrf
+            <div class="row justify-content-around" >
+                    <div class="col-6">
                 <div class="form-group form-primary form-static-label">
                     <input type="text" name="code_consommation_mat" class="form-control" placeholder="Entrer le code de la consommation du matériel">
                     <span class="form-bar"></span>
                     <label class="float-label">Code de consommation du matériel <span class="text-danger">*</span> </label>
                 </div>
+                    </div>
+                    <div class="col-6">
 
                 <div class="form-group form-primary form-static-label">
                     <input type="decimal" name="quantite_consommation_mat" class="form-control" placeholder="Entrer la quantité consommée du matériel">
                     <span class="form-bar"></span>
                     <label class="float-label">Quantité de consommée <span class="text-danger">*</span> </label>
-                    
                 </div>
-
+                </div>
+            </div>
+            <div class="row justify-content-around" >
+                    <div class="col-6">
                 <div class="form-group form-primary form-static-label">
                     <input type="date" name="date_consommation_mat" class="form-control" >
                     <span class="form-bar"></span>
                     <label class="float-label">Date de la consommation <span class="text-danger">*</span> </label>
                 </div>
 
-
-                <div class="form-group form-primary form-static-label">
-                <label class="form-label " style="top: -14px; font-size: 11px; color: #448aff;">Matériel consommée <span class="text-danger">*</span> </label>
-                    <div class="select">
-                        <select class="form-control" name="materiel_id">
-                            <option value="">Selectionner matériel</option>
-                            @foreach($materiels as $materiel)
-                                <option value="{{ $materiel->id }}">{{ $materiel->intitule_materiel }}</option>
-                            @endforeach
-                        </select>   
-                    </div>                
-                     <span class="form-bar"></span>
-                     
-                </div>
+                    </div>
+                <div class="col-6">
+                        <div class="form-group form-primary form-static-label">
+                            <label class="select-label " >Matériel Consommé <span class="text-danger">*</span> </label>
+                            <div class="select">
+                                <select class="form-control" name="materiel_id">
+                                    <option value="">Selectionner Matériel</option>
+                                    @foreach($materiels as $materiel)
+                                        <option value="{{ $materiel->id }}">{{ $materiel->intitule_materiel }}</option>
+                                    @endforeach
+                            </select>
+                            </div>
+                            <span class="form-bar"></span>
+                        </div>
+                    </div>
+            </div>
 
                 <div class=" text-right" style="margin-top: 10px;">
                 <button type="button" class="btn btn-primary" onclick="$('#modal2').modal('show');"> <i class="fa fa-fw fa-plus-circle"> </i> Ajouter</button>
-                <button type="reset" class="btn btn-info" style="margin-left: 10px;"><i class="fa fa-fw fa-sync" ></i> Réinitialiser</button>
                  </div>
                                                  
             </form>

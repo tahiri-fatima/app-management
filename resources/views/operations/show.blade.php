@@ -2,15 +2,9 @@
   
 @section('content')
 
-<div class="container" style="margin-left: 20%;" > 
-        <a class="btn btn-outline-primary text-right" href="{{ route('operations.create') }}"><i class="fa fa-fw fa-plus-circle"></i> Ajouter nouvelle opération</a> 
-        @can('edit')
-        <a class="btn btn-outline-primary"  href="{{ route('operations.edit',$operation->id) }}" ><i class="fa fa-fw fa-edit"></i> Modifier</a>
-        @endcan
-        @can('delete')
-        <button type="submit" class="btn btn-outline-primary" onclick="$('#modal').modal('show');"  ><i class="fa fa-fw fa-trash"></i> Supprimer</button>
-        @endcan
-        <a class="btn btn-outline-primary" href="{{ route('operations.index') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+<div class="container" style="margin-left: 70%;" > 
+     
+        <a class="btn btn-primary" href="{{ route('operations.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div>
 
 <!-- modal pour confirmer la supression !-->

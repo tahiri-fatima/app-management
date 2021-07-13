@@ -3,7 +3,7 @@
 @section('content')
   
 <div class="container " style="margin-left: 70%;"  > 
-            <a class="btn btn-primary" href="{{ route('factures.show',$facture->id) }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
+            <a class="btn btn-primary" href="{{ route('factures.gestionForm') }}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
 </div> 
 
 <div class="col  justify-content-center message" > 
