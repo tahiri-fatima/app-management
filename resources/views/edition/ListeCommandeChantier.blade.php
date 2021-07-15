@@ -1,13 +1,13 @@
 @extends('layouts.app')
  
 @section('content')
-
+<!--
 <div class="container" style="margin: 30px 50px 30px 180px ">
 		
 			<div class="card-body">
 					<h5 class="card-title"><i class="fa fa-fw fa-search"></i> Chercher chantier</h5>
 
-                    <form class="form-material" type="get" action="{{ route('chantiers.search') }}" >
+                    <form class="form-material" type="get" action="#" >
                         <div class="row justify-content-around">
                                 <div class="col-4">
                                 <div class="form-group" style="margin-right: 15px;" >
@@ -29,9 +29,9 @@
            
         </div>
 </div>
+-->
 
-
-<div class="form-material" style="margin-top: 20px;margin-bottom: 20px">
+<div class=" container form-material" style="margin-top: 20px;margin-bottom: 20px">
 		<div class="" style="margin-bottom: 20px;">
 			
         <div class="text-right"> 

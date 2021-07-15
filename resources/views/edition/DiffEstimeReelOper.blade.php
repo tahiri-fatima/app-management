@@ -19,7 +19,7 @@
       <div class="text-center">
            <img class="img" src="{{url('assets/images/logo.png')}}"  style="width: 170px; height: 70px; margin-top:25px " />
 
-                      <h5 style="margin:30px 15px 30px 15px; text-align:center">La difference entre les durées réelles et les durées estimées associée aux opérations du chantier {{$chantier->intitule_chantier}} </h5>
+                      <h5 style="margin:30px 15px 30px 15px; text-align:center">La différence entre les durées réelles et les durées estimées associée aux opérations du chantier {{$chantier->intitule_chantier}} </h5>
                       
             </div>
                       <table class="table m-b-0 text-center" >
@@ -28,10 +28,10 @@
                               <td>Opération</td>
                               <td>Durée Estimée</td>                              
                               <td>Durée Réelle</td>                              
-                              <td>Difference Durée</td>
+                              <td>différence Durée</td>
                               <td>Quantité Opération</td>                              
                               <td>Quantité Réalisée</td>                              
-                              <td>Difference Quantité</td>
+                              <td>différence Quantité</td>
 
                           </thead>
                           <tbody >

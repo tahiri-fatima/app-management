@@ -236,9 +236,14 @@ class FraisController extends Controller
                 ->where('nature_frais_id', '=', $nature->id)
                 ->first();
             $frai->setAttribute('nature_frais', $nature->nature_frais);
-            $frai->setAttribute('montant_estime', $chantier_nat->montant_estimee);
+            if($chantier_nat !== null){
+                $montant_estime = $chantier_nat->montant_estimee;
+            }else{
+                $montant_estime = 0;
+            }
+            $frai->setAttribute('montant_estime', $montant_estime);
 //dd($chantier_nat);
-            $total += $chantier_nat->montant_estimee;
+            $total += $montant_estime;
         }
         
        $chantier->setAttribute('total', $total);

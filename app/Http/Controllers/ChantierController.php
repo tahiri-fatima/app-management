@@ -726,7 +726,6 @@ class ChantierController extends Controller
             return redirect()->route('chantiers.DetailPrixSalaireCharts', $id);
 
         }
-       
         $chantier = Chantier::find($id);
        // dd($chantier);
         $personnels = $chantier->personnels->groupby('qualification_id');
@@ -780,6 +779,7 @@ class ChantierController extends Controller
         $chantier->setAttribute('total', $total);
 //dd($personnels);
         if (isset($_GET['tableau'])) {
+
             return view('edition.DetailPrixSalaires', compact('personnels','chantier'));
         }
     }
@@ -953,7 +953,7 @@ class ChantierController extends Controller
         if ($chantierMateriels->isEmpty()) {
             // dd($chantiers);
              return redirect()->back()
-                         ->with('warning',"Ce chantier n'a pas encore des materiels");
+                         ->with('warning',"Ce chantier n'a pas encore des matériaux");
          }
          
          return redirect()->route('commandesMateriaus.DetailPrixMateriaux',$chantier->id);

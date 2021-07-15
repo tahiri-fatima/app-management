@@ -22,8 +22,8 @@
       </div>           
                       <table class="table m-b-0 text-center" >
                           <thead style="font-weight:bold">
-                              <td>Désignation</td>
-                              <td>Montant</td>
+                              <td>Catégorie</td>
+                              <td>Montant de frais</td>
                               <td>% de l'offre</td>
                           </thead>
                           <tbody >

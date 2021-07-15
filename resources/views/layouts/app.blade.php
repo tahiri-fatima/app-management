@@ -171,19 +171,22 @@
                                                 $page = "ACCUEIL";
                                             }
                                             elseif($route == "chantierMateriels.DiffDureeEstimeReelMat"){
-                                                $page = "La difference entre la durée estimée de service des matériels et la durée réelle";
+                                                $page = "La différence  entre la durée estimée de service des matériels et la durée réelle";
                                             }elseif($route == "chantierMateriels.ListeChantiersMat"){
                                                 $page = "Liste des chantiers";
                                             }
                                             elseif($route == "chantierPersonnels.DiffDureeEstimeReel"){
-                                                $page = "La difference entre la durée estimée d'affectation des personnels et la durée réelle";
+                                                $page = "La différence  entre la durée estimée d'affectation des personnels et la durée réelle";
                                             }elseif($route == "chantierPersonnels.ListeChantiers"){
                                                 $page = "Liste des chantiers";
                                             }
                                             elseif($route == "chantierOperations.DiffEstimeReel"){
-                                                $page = "La difference entre les valeurs estimées et les valeurs réelles associée des aux opértions";
+                                                $page = "La différence  entre les valeurs estimées et les valeurs réelles associée des aux opérations";
                                             }elseif($route == "chantierOperations.ListeChantiersOper"){
                                                 $page = "Liste des chantiers";
+                                            }
+                                            elseif($route == "password.request"){
+                                                $page = "Rénitialisation du mot de passe";
                                             }
 
                                             ?>

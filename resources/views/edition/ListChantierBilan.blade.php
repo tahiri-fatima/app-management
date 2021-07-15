@@ -3,41 +3,9 @@
 @section('content')
 
 
-<div class="container  " style="margin-left: 190px;" >
-		<div class="card">
-			<div class="card-body">
-				
-				<div >
-					<h5 class="card-title"><i class="fa fa-fw fa-search"></i> Chercher chantier</h5>
-
-                        <form class="form-material" type="get" action="{{ route('chantiers.search') }}" >
-                            <div class="row justify-content-around">
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <input class="form-control mr-ms-2" name="codechantier"  type="search" placeholder="Code du chantier " >
-                                    </div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="form-group">
-                                        <input class="form-control mr-ms-2" name="intitulechantier"  type="search" placeholder="Intitulé du chantier " >
-                                    </div>
-                                </div>
-                                <div class="row pull-right" style="margin-right: 15px;">
-                                    <div class="form-group " >
-                                        <button class="btn btn-primary" type="submit" value="search"  ><i class="fa fa-fw fa-search"></i> Chercher</button>
-                                        <button type="reset" class="btn btn-info" > <i class="fa fa-fw fa-sync"></i> Réinitialiser</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                </div>
-            </div>
-        </div>
-       </div>
-
 
        
-<div class="form-material" style="margin-top: 20px;margin-bottom: 20px;margin-left: 50px;">
+<div class="form-material" style="margin-top: 30px;margin-bottom: 20px;margin-left: 50px;">
 	
 
 

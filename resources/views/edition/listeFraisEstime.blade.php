@@ -2,13 +2,10 @@
  
 @section('content')
 
-<div class="container " style="margin-left: 50%; margin-top: 50px;">
+<div class="container " style="margin-left: 60%; margin-top: 50px;">
        <form type="get" action="" >
            <div class="form-group " style="display: flex;">
-                <div class="searchbar">
-                    <input class="search_input" type="text" name="codechantier" placeholder="Chercher avec le code de chantier ">
-                    <button class="btn search_icon" type="submit" value="search" style="border: none; background-color: #77d5fb;" ><i class="fas fa-search"></i> </button>
-                </div>
+                
                 <div style="margin-left: 15px ;" >
                     <a class="btn btn-primary " href="home" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
                 </div>
@@ -19,7 +16,8 @@
 
 
        
-<div class="form-material" style="margin-top: 20px;margin-bottom: 20px;">
+<div class="container form-material" style="margin-top: 20px;margin-bottom: 20px;">
+
 <div class="col d-flex justify-content-center ">
 @if ($message = Session::get('success'))
         <div class="alert alert-success message">

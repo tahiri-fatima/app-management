@@ -3,20 +3,6 @@
 @section('content')
 
 
-<div class="container " style="margin-left: 50%; margin-top: 50px;">
-       <form type="get" action="{{ route('commandeMateriaus.search') }}" >
-           <div class="form-group " style="display: flex; ">
-                <div class="searchbar">
-                    <input class="search_input" type="text" name="code_commande" placeholder="Chercher avec le code de commande ">
-                    <button class="btn search_icon" type="submit" value="search" style="border: none; background-color: #77d5fb;" ><i class="fas fa-search"></i> </button>
-                </div>
-                <div style="margin-left: 15px ;" >
-                    <a class="btn btn-primary " href="home" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
-                </div>
-           </div>
-        </form>   
-</div>
-
 <div class="form-material" style="margin-top: 20px;margin-bottom: 20px;margin-left: 50px;">
 		
 

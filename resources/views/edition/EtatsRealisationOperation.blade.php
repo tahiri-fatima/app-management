@@ -2,13 +2,10 @@
  
 @section('content')
 
-       <div class="container " style="margin-left: 50%; margin-top: 50px;">
-       <form type="get" action="{{ route('operations.searchOperationEtat') }}" >
+       <div class="container " style="margin-left: 80%; margin-top: 50px;">
+       <form type="get" action="#" >
            <div class="form-group " style="display: flex;">
-                <div class="searchbar">
-                    <input class="search_input" type="text" name="codeoperation" placeholder="Chercher avec le code d'opération ">
-                    <button class="btn search_icon" type="submit" value="search" style="border: none; background-color: #77d5fb;" ><i class="fas fa-search"></i> </button>
-                </div>
+               
                 <div style="margin-left: 15px ;" >
                     <a class="btn btn-primary " href="{{route('home')}}" ><i class="fa fa-fw fa-arrow-circle-left"></i> Retour</a> 
                 </div>
